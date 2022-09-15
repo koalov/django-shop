@@ -1,0 +1,15 @@
+{% extends 'ecomm/base.html' %}
+
+{% block content %}
+<h1>{{ category.name }}</h1>
+<p>{{ category.description }}</p>
+
+{% for p in product %}
+    <p><a href="/product/{{ p.slug }}/">{{ p.name }}</a></p>
+{% endfor %}
+
+{% endblock %}
+
+
+
+

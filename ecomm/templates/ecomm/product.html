@@ -1,0 +1,34 @@
+{% extends 'ecomm/base.html' %}
+
+{% block content %}
+
+<div class="product">
+{% if product.image %}
+        <p><img class="img-article-left thumb" src="{{product.image.url}}"></p>
+{% endif %}
+
+<div class="product-info">
+    <h1>{{ product.name }}</h1>
+    <h4>{{ product.price }}</h4>
+    <p>{{ product.description }}</p>
+</div></div>
+
+{% for c in charc %}
+    {% if c %}
+<div class="product_charc">
+<h4>Характеристики товара:</h4>
+    <p>Цвет – {{ c.color }}</p>
+    <p>Бренд – {{ c.brand }}</p>
+    <p>Тип – {{ c.type }}</p>
+    <p>Размер – {{ c.size }}</p>
+    <p>Материал – {{ c.material }}</p>
+    <p>Состав – {{ c.consist }}</p>
+    <p>Страна производитель – {{ c.country }}</p>
+    <p>Пол – {{ c.sex }}</p>
+    {% endif %}
+{% endfor %}
+</div>
+{% endblock %}
+
+
+

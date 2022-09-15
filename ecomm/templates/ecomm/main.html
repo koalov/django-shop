@@ -1,0 +1,65 @@
+{% extends 'ecomm/base.html' %}
+{% block content %}
+<h1>Список категорий</h1>
+            <ul>
+                {% for c in category %}
+                <li><a href="{{ c.slug }}/">{{ c.name }}</a></li>
+                {% endfor %}
+            </ul>
+
+            <h1>Список товаров</h1>
+            <ul>
+            {% for product in products %}
+                <li><a href="/product/{{ product.slug }}/">{{ product.name }}</a></li>
+            {% endfor %}
+{% endblock %}
+
+
+
+
+
+
+<!--{% load static %}-->
+<!--<!DOCTYPE html>-->
+<!--<html lang="en" >-->
+<!--<head>-->
+<!--    <title>Главная стринца супер сайта</title>-->
+<!--    <link type="text/css" href={% static 'ecomm/css/style.css' %} rel="stylesheet" />-->
+<!--    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">-->
+<!--	<link rel="shortcut icon" href="{% static 'ecomm/images/main.ico' %}" type="image/x-icon"/>-->
+<!--	<meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--</head>-->
+<!--<body>-->
+<!--    <div class="page">-->
+<!--        <header class="header"></header>-->
+
+<!--        <main class="content">-->
+
+<!--            <h1>Список категорий</h1>-->
+<!--            <ul>-->
+<!--                {% for c in category %}-->
+<!--                <li><a href="{{ c.slug }}/">{{ c.name }}</a></li>-->
+<!--                {% endfor %}-->
+<!--            </ul>-->
+
+<!--            <h1>Список товаров</h1>-->
+<!--            <ul>-->
+<!--            {% for product in products %}-->
+<!--                <li><a href="/product/{{ product.slug }}/">{{ product.name }}</a></li>-->
+<!--            {% endfor %}-->
+<!--            </ul>-->
+<!--        </main>-->
+
+
+<!--&lt;!&ndash; Footer &ndash;&gt;-->
+<!--       <footer class="footer"></footer>-->
+<!--<tr><td>-->
+<!--	<div id="footer">-->
+<!--		<p>&copy; 2022 Частичное или полное копирование информации с данного сайта для распространения на других ресурсах, в том числе и бумажных, строго запрещено.</p>-->
+<!--	</div>-->
+<!--</td></tr></table>-->
+<!--&lt;!&ndash; Конец footer'а и страницы &ndash;&gt;-->
+<!--    </div>-->
+
+<!--</body>-->
+<!--</html>-->
