@@ -1,11 +1,13 @@
 from django.http import Http404, HttpResponse
 from django.shortcuts import render, get_object_or_404
 from .models import *
+from cart.form import CartAddProductForm
+
 
 menu = [{'title': "О сайте", 'url_name': 'about'},
         {'title': "Обратная связь", 'url_name': 'feedback'},
         {'title': "Что-то ещё", 'url_name': 'something'},
-        {'title': "Корзина", 'url_name': 'basket'},
+        # {'title': "Корзина", 'url_name': 'basket'},
         {'title': "Войти", 'url_name': 'login'},
         ]
 
@@ -28,11 +30,13 @@ def homepage(request):
 def product_page(request, prod_slug):
     product = Product.objects.get(slug=prod_slug)
     charcs = product.characteristics.all().values()
+    cart_product_form = CartAddProductForm()
 
     context = {'menu': menu,
                'product': product,
                'charc': charcs,
-               'title': 'Товар'}
+               'title': 'Товар',
+               'cart_product_form': cart_product_form}
 
     return render(request, 'ecomm/product.html', context=context)
 
@@ -56,8 +60,9 @@ def login(request):
     return render(request, 'ecomm/login.html', {'menu': menu, 'title': 'Личный кабинет'})
 
 
-def basket(request):
-    return render(request, 'ecomm/basket.html', {'menu': menu, 'title': 'Корзина'})
+def basket(request, pk):
+    product = Product.objects.get(pk=pk)
+    return render(request, 'ecomm/basket.html', {'menu': menu, 'title': 'Корзина', 'product': product})
 
 
 def something(request):
