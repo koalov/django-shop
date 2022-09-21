@@ -1,41 +1,36 @@
 {% extends 'ecomm/base.html' %}
-
+{% block title %}
+{{ product.name }}
+{% endblock %}
 {% block content %}
 
-<div class="product">
-{% if product.image %}
-        <p><img class="img-article-left thumb" src="{{product.image.url}}"></p>
-{% endif %}
+<div class="product-detail">
+<img class="img-article-left thumb" src="{% if product.image %}{{product.image.url}}{% endif %}">
+
+<h2>
+<a href="{{ product.category.get_absolute_url }}">{{product.category }}</a>
+</h2>
 
 <div class="product-info">
     <h1>{{ product.name }}</h1>
-    <h4>{{ product.price }}</h4>
+    <h3>{{ product.price }}</h3>
     <form action="{% url 'cart:cart_add' product.id %}" method="post">
     {{ cart_product_form }}
     {% csrf_token %}
     <input type="submit" value="Add to cart">
     </form>
     <p>{{ product.description }}</p>
-</div></div>
+</div>
 
-<button><a href="{% url 'basket' pk=product.id%}">Добавить в корзину</a></button>
 
-{% for c in charc %}
-    {% if c %}
 <div class="product_charc">
 <h4>Характеристики товара:</h4>
-    <p>Цвет – {{ c.color }}</p>
-    <p>Бренд – {{ c.brand }}</p>
-    <p>Тип – {{ c.type }}</p>
-    <p>Размер – {{ c.size }}</p>
-    <p>Материал – {{ c.material }}</p>
-    <p>Состав – {{ c.consist }}</p>
-    <p>Страна производитель – {{ c.country }}</p>
-    <p>Пол – {{ c.sex }}</p>
-    {% endif %}
-{% endfor %}
-</div>
+    {% for spec in product.productspecificationvalue_set.all %}
+<p>{{ spec.specification }} - {{ spec.value }}</p>
+    {% endfor %}
+</div></div>
 {% endblock %}
+
 
 
 

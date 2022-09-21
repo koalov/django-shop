@@ -40,6 +40,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'ecomm',
     'cart',
+    'mptt',
+    'colorfield',
+    'django_google_maps',
 
 ]
 
@@ -75,6 +78,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'shop.wsgi.application'
 
+MPTT_ADMIN_LEVEL_INDENT = 50
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
@@ -133,7 +137,8 @@ STATICFILES_DIRS = []
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
 MEDIA_URL = '/media/'
 if DEBUG:
     MEDIA_URL = 'media/'
+
+GOOGLE_MAPS_API_KEY = 'AIzaSyBQSrqOT1hWWhXcjDVTiMnLNEE0hmk5iC8'

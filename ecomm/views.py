@@ -7,49 +7,42 @@ from cart.form import CartAddProductForm
 menu = [{'title': "О сайте", 'url_name': 'about'},
         {'title': "Обратная связь", 'url_name': 'feedback'},
         {'title': "Что-то ещё", 'url_name': 'something'},
-        # {'title': "Корзина", 'url_name': 'basket'},
+        {'title': "Корзина", 'url_name': 'cart'},
         {'title': "Войти", 'url_name': 'login'},
         ]
 
 
-def about(request):
-    return render(request, 'ecomm/about.html', {'menu': menu, 'title': 'О сайте'})
+def homepage(request, cat_slug=None):
+    category = None
+    categories = Category.objects.all()
+    # categories = Category.objects.filter(level=0)
+    # categories = Category.get_children()
 
-
-def homepage(request):
-    list_products = Product.objects.all().values()
-    category = Category.objects.all()
+    products = Product.objects.filter(available=True)
+    if cat_slug:
+        category = get_object_or_404(categories, slug=cat_slug)
+        products = products.filter(category=category)
     context = {'menu': menu,
-               'products': list_products,
+               'products': products,
                'category': category,
-               'title': 'Главная страница'}
-
+               'categories': categories,
+               'title': 'Главная страница',
+               }
     return render(request, 'ecomm/main.html', context=context)
 
 
-def product_page(request, prod_slug):
-    product = Product.objects.get(slug=prod_slug)
-    charcs = product.characteristics.all().values()
+def product_detail(request, id, slug):
+    product = get_object_or_404(Product, id=id, slug=slug, available=True)
+    product_spec = ProductSpecification.objects.all()
+    product_spec_val = ProductSpecificationValue.objects.all()
     cart_product_form = CartAddProductForm()
-
     context = {'menu': menu,
+               'product_spec': product_spec,
+               'product_spec_val': product_spec_val,
                'product': product,
-               'charc': charcs,
-               'title': 'Товар',
                'cart_product_form': cart_product_form}
 
     return render(request, 'ecomm/product.html', context=context)
-
-
-def category_page(request, cat_slug):
-    category = Category.objects.get(slug=cat_slug)
-    product = category.product_set.all()
-    context = {'menu': menu,
-               'category': category,
-               'product': product,
-               'title': 'Категории'}
-
-    return render(request, 'ecomm/category.html', context=context)
 
 
 def feedback(request):
@@ -60,11 +53,11 @@ def login(request):
     return render(request, 'ecomm/login.html', {'menu': menu, 'title': 'Личный кабинет'})
 
 
-def basket(request, pk):
-    product = Product.objects.get(pk=pk)
-    return render(request, 'ecomm/basket.html', {'menu': menu, 'title': 'Корзина', 'product': product})
-
-
 def something(request):
     return render(request, 'ecomm/something.html', {'menu': menu, 'title': 'Что то полезное'})
+
+
+def about(request):
+    return render(request, 'ecomm/about.html', {'menu': menu, 'title': 'О сайте'})
+
 
