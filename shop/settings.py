@@ -141,4 +141,3 @@ MEDIA_URL = '/media/'
 if DEBUG:
     MEDIA_URL = 'media/'
 
-GOOGLE_MAPS_API_KEY = 'AIzaSyBQSrqOT1hWWhXcjDVTiMnLNEE0hmk5iC8'
