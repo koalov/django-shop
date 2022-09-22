@@ -1,19 +1,37 @@
 {% extends 'ecomm/base.html' %}
+{% block title %}
+{% load mptt_tags %}
+{% if category %}{{ category.name }}{% else %}Товары{% endif %}
+{% endblock %}
 {% block content %}
 <h1>Список категорий</h1>
-            <ul>
-                {% for c in category %}
-                <li><a href="{{ c.slug }}/">{{ c.name }}</a></li>
-                {% endfor %}
-            </ul>
+            <a href="{% url 'ecomm:home' %}">Все</a>
+<ul>
+    {% recursetree categories %}
+        <li>
 
-            <h1>Список товаров</h1>
-            <ul>
-            {% for product in products %}
-                <li><a href="/product/{{ product.slug }}/">{{ product.name }}</a></li>
-            {% endfor %}
+            <a href="{{ node.get_absolute_url}}">{{ node.name }}</a>
+
+            {% if not node.is_leaf_node and node.level >= 0 %}
+                <ul class="children">
+                    <a href="{{ children.get_absolute_url }}">{{ children }}</a>
+                </ul>
+            {% endif %}
+        </li>
+    {% endrecursetree %}
+</ul>
+<h1>{% if category %}{{ category.name }}{% else %}Товар{% endif %}</h1>
+{% for product in products %}
+<div>
+<a href="{{ product.get_absolute_url }}">
+    <img src="{% if product.image %}{{ product.image.url }}{% endif %}">
+</a>
+<a href="{{ product.get_absolute_url }}">{{ product.name }}</a>
+<br>
+{{ product.price }}
+</div>
+{% endfor %}
 {% endblock %}
-
 
 
 
