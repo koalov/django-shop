@@ -28,7 +28,8 @@
 </a>
 <a href="{{ product.get_absolute_url }}">{{ product.name }}</a>
 <br>
-{{ product.price }}
+    <p>Цена: {{ product.price }}</p>
+<br>
 </div>
 {% endfor %}
 {% endblock %}
