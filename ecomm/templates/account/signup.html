@@ -1,0 +1,43 @@
+{% extends "account/base.html" %}
+
+{% load i18n %}
+
+{% block head_title %}{% trans "Register" %}{% endblock %}
+
+{% block content %}
+<h1 style="margin-left: 23px">{% trans "Register" %}</h1>
+
+<p style="margin-left: 24px">{% blocktrans %}Already have an account? Then please <a
+        href="{{ login_url }}">login</a>.{% endblocktrans %}</p>
+
+<form class="signup" id="signup_form" style="margin-left: 23px" method="post"
+      action="{% url 'account_signup'%}">
+  {% csrf_token %}
+  <table>
+      <tr>
+        <td>{{ form.email.label_tag}}</td>
+        <td>{{ form.email }}</td>
+      </tr>
+      <tr>
+        <td>{{ form.username.label_tag }}</td>
+        <td>{{ form.username }}</td>
+      </tr>
+      <tr>
+        <td>{{ form.password1.label_tag }}</td>
+        <td>{{ form.password1 }}</td>
+      </tr>
+      <tr>
+        <td>{{ form.password2.label_tag }}</td>
+        <td>{{ form.password2 }}</td>
+      </tr>
+    </table>
+
+  {% if redirect_field_value %}
+  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+  {% endif %}
+  <button type="submit" style="height: 30px; width: 80px; margin-left: 137px">
+    <strong>{% trans 'Register' %}</strong>
+    </button>
+</form>
+
+{% endblock %}
