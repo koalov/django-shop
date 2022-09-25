@@ -1,4 +1,6 @@
 {% load static %}
+{% load i18n %}
+{% load account %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,6 +9,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<link rel="shortcut icon" href="{% static 'ecomm/images/main.ico' %}" type="image/x-icon"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	{% block extra_head %} {% endblock extra_head%}
 </head>
 <body>
 {% block mainmenu %}
@@ -20,6 +23,22 @@
 				<li class="last"><a href="/{{ m.url_name }}">{{m.title}}</a></li>
 		{% endif %}
 {% endfor %}
+				{% block account %}
+			<li class="last">
+				{% if request.user.is_authenticated %}
+					<li class="last">{% trans 'Welcome' %}
+					<a href="{% url 'users:profile' %}">
+						{{ user.username }}</a>  |
+					<a href="{% url 'account_logout' %}">{% trans 'Logout' %}</a>
+					</li>
+				{% else %}
+					<a href="{% url 'account_signup' %}">
+						{% trans 'Register' %}</a> |
+					<a href="{% url 'account_login' %}">
+						{% trans 'Login'%}</a>
+				{%endif %}
+			</li>
+			{% endblock account %}
 				</ul>
 			</div>
 {% endblock mainmenu %}

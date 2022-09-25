@@ -2,13 +2,12 @@ from django.http import Http404, HttpResponse
 from django.shortcuts import render, get_object_or_404
 from .models import *
 from cart.form import CartAddProductForm
-
+from shop.settings import GOOGLE_MAPS_API_KEY
 
 menu = [{'title': "О сайте", 'url_name': 'about'},
         {'title': "Обратная связь", 'url_name': 'feedback'},
         {'title': "Что-то ещё", 'url_name': 'something'},
         {'title': "Корзина", 'url_name': 'cart'},
-        {'title': "Войти", 'url_name': 'login'},
         ]
 
 
@@ -46,11 +45,9 @@ def product_detail(request, id, slug):
 
 
 def feedback(request):
-    return render(request, 'ecomm/feedback.html', {'menu': menu, 'title': 'Обратная связь'})
-
-
-def login(request):
-    return render(request, 'ecomm/login.html', {'menu': menu, 'title': 'Личный кабинет'})
+    return render(request, 'ecomm/feedback.html', {'menu': menu,
+                                                   'title': 'Обратная связь',
+                                                   'api-key': GOOGLE_MAPS_API_KEY})
 
 
 def something(request):

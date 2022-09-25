@@ -1,6 +1,5 @@
 from django.db import models
 from django.urls import reverse
-from colorfield.fields import ColorField
 from mptt.models import MPTTModel, TreeForeignKey
 
 
