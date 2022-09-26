@@ -1,0 +1,156 @@
+body {
+    margin: 0;
+    font-family: Tahoma;
+    font-size: 16px;
+    color: black;
+}
+*,
+*:before,
+*:after{
+    box-sizing: border-box;
+}
+.page{
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.header {
+	background: #3F4137;
+	height: 80px;
+	display: flex;
+	justify-content: space-between;
+}
+
+.footer{
+    padding: 20px;
+    background-color: black;
+}
+.footer{
+    margin-top: auto;
+}
+
+.content{
+    max-width: 800px;
+    padding: 40px 20px;
+}
+.mainmenu {
+	list-style: none;
+	margin: 0 10px;
+	padding: 0;
+	height: 60px;
+	color: #fdc073;
+	font-size: 20px;
+    display: flex;
+    height: 100%;
+}
+.mainmenu div {
+	margin-right: 20px;
+}
+
+.mainmenu div a {
+	text-decoration: none;
+	color: #fdc073;
+}
+.mainmenu li {
+	float: left;
+	margin: 18px 40px 0 30px;
+}
+.mainmenu li.logo {margin: 0;}
+
+.mainmenu  a {
+	color: #fdc073;
+	text-decoration: none;
+}
+.mainmenu  a:hover {
+	color: #FDA83D;
+}
+.logo {
+	background: url('../images/logo.jpg') no-repeat 10px 5px;
+	width: 90px;
+	height: 70px;
+}
+img {max-width: 600px; height: auto;}
+
+img.img-article-left {
+	max-width: 300px;
+	height: auto;
+	float: left;
+	padding: 0 10px 10px 0;
+}
+
+img.img-article-left.thumb {
+	max-width: 150px;
+	height: auto;
+}
+
+.parent-ul {
+	height: fit-content;
+	padding: 10px;
+	background: red;
+}
+
+.parent-ul:hover .children-ul {
+	display: block;
+}
+
+.children-ul {
+	display: none;
+	height: fit-content;
+	padding: 10px;
+	background: green;
+}
+
+
+/*//////////*/
+
+.category-wrap {
+	position: relative;
+	height: 100%;
+	width: fit-content;
+	display: flex;
+    /*flex-direction: column;*/
+    /*justify-content: center;*/
+}
+
+.category-wrap:hover .categories {
+	display: block;
+}
+
+.categories {
+	position: absolute;
+	top: 60px;
+	background: #3F4137;
+	display: none;
+}
+
+.categories:hover .children {
+	display: block;
+}
+
+.children {
+	display: none;
+}
+
+.children li {
+	background: #3F4137;
+}
+
+.separator {
+	height: 30px;
+	width: 3px;
+	background: #fdc073;
+	margin: 0 20px;
+}
+
+.item {
+	display: inline-block;
+	justify-content: center;
+	padding-left: 10px;
+	margin-left: 5px;
+}
+
+.auto {
+	display: flex;
+}

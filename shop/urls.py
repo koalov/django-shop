@@ -25,6 +25,7 @@ urlpatterns = [
     path('', include('ecomm.urls', namespace='ecomm')),
     path('account/', include('allauth.urls')),
     path('account/', include('users.urls')),
+    path('__debug__/', include('debug_toolbar.urls')),
     ]
 
 

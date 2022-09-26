@@ -23,7 +23,7 @@ class Category(MPTTModel):
         return f'{self.name} | - {self.parent}' if self.parent else self.name
 
     def get_absolute_url(self):
-        return reverse('ecomm:product_list_by_category', args=[self.slug])
+        return reverse('ecomm:category', args=[self.slug])
 
 
 class ProductType(models.Model):
