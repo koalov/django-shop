@@ -1,0 +1,53 @@
+{% load mptt_tags %}
+{% load i18n %}
+{% load account %}
+
+<div class="header">
+    <div class="mainmenu">
+        <div class="logo">
+			<a href="/"><li class="logo"></li></a>
+        </div>
+
+        <div class="category-wrap">
+            <p>Каталог</p>
+            <div class="categories">
+                {% recursetree category_tree %}
+                    <ul class="parent-ul">
+                        <li>
+                            <a href="{{ node.get_absolute_url}}">{{ node.name }}</a>
+                            {% if not node.is_leaf_node %}
+                                <ul class="children">
+                                    <a href="{{ children.get_absolute_url }}">{{ children }}</a>
+                                </ul>
+                            {% endif %}
+                        </li>
+                    </ul>
+                {% endrecursetree %}
+            </div>
+        </div>
+
+        <div class="service-page">
+                {% for m in menu %}
+                    <p class="item"><a href="/{{ m.url_name }}">{{m.title}}</a></p>
+                {% endfor %}
+        </div>
+
+        <div class="auto">
+            {% block account %}
+                {% if request.user.is_authenticated %}
+                    <li class="auto">{% trans 'Welcome' %}&nbsp;
+                        <a href="{% url 'users:profile' %}">{{ user.username }}</a>
+                            <div class="separator"></div>
+                        <a href="{% url 'account_logout' %}">{% trans 'Logout' %}</a>
+                    </li>
+                {% else %}
+                    <li class="auto">
+                        <a href="{% url 'account_signup' %}">{% trans 'Register' %}</a>
+                            <div class="separator"></div>
+                        <a href="{% url 'account_login' %}">{% trans 'Login'%}</a>
+                    </li>
+                {%endif %}
+            {% endblock account %}
+        </div>
+    </div>
+</div>
