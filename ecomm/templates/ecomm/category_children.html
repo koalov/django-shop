@@ -2,17 +2,33 @@
 
 {% block title %} Купить {{ category.name }}{% endblock title %}
 
+
 {% block content %}
-<h1>{{ category.name }}</h1>
-{% for product in products %}
-<div>
-<a href="{{ product.get_absolute_url }}">
-    <img src="{% if product.image %}{{ product.image.url }}{% endif %}">
-</a>
-<a href="{{ product.get_absolute_url }}">{{ product.name }}</a>
-<br>
-    <p>Цена: {{ product.price }}</p>
-<br>
+{% include "ecomm/breadcrumb.html" %}
+<div class="container-fluid">
+    <h1>{{ category.name }}</h1>
 </div>
-{% endfor %}
+<div class="container-fluid">
+    <div class="row row-cols-5">
+        <div class="col">
+            {% load sidebar %}
+            {% get_sidebar_info products %}
+        </div>
+        {% for product in products %}
+        <div class="col">
+        <div class="card">
+            <img src="{% if product.image %}{{ product.image.url }}{% endif %}" class="card-img-top">
+            <div class="card-body">
+                <h5 class="card-title"><a href="{{ product.get_absolute_url }}">{{ product.name }}</a></h5>
+                <p class="card-text">{{ product.description|truncatechars:100}}</p>
+                <p class="card-text">Цена: {{ product.price }}</p>
+            </div>
+            <div class="card-footer">
+                <a href="{{ product.get_absolute_url }}" class="btn btn-primary">Подробнее</a>
+            </div>
+        </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
 {% endblock %}

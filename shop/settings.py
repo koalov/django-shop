@@ -14,6 +14,8 @@ from pathlib import Path
 import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Environ
@@ -44,12 +46,13 @@ INSTALLED_APPS = [
     'ecomm',
     'cart',
     'mptt',
-    'django_google_maps',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'users',
     'debug_toolbar',
+    'send_mail',
+
 ]
 
 MIDDLEWARE = [
@@ -173,3 +176,9 @@ GOOGLE_MAPS_API_KEY = env('GOOGLE_MAPS_API_KEY')
 INTERNAL_IPS = [
     "127.0.0.1",
     ]
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'blinov.maxim@gmail.com'
+EMAIL_HOST_PASSWORD =os.environ.get('EMAIL_HOST_PASSWORD')
+EMAIL_USE_TLS = True

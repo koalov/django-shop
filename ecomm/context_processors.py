@@ -1,4 +1,4 @@
-from .models import Category
+from .models import *
 
 menu = [{'title': "О сайте", 'url_name': 'about'},
         {'title': "Обратная связь", 'url_name': 'feedback'},

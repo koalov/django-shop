@@ -3,17 +3,27 @@
 {% block content %}
 <h1>Список товаров</h1>
 
-{% for product in products %}
-<div>
-<a href="{{ product.get_absolute_url }}">
-    <img src="{% if product.image %}{{ product.image.url }}{% endif %}">
-</a>
-<a href="{{ product.get_absolute_url }}">{{ product.name }}</a>
-<br>
-    <p>Цена: {{ product.price }}</p>
-<br>
+<div class="container-fluid">
+<div class="card-group">
+    {% for product in products %}
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <img src="{% if product.image %}{{ product.image.url }}{% endif %}" class="card-img-top w-50">
+                <div class="card-body">
+                    <h5 class="card-title"><a href="{{ product.get_absolute_url }}">{{ product.name }}</a></h5>
+                    <p class="card-text">Цена: {{ product.price }}</p>
+                </div>
+                <div class="card-footer">
+                    <a href="{{ product.get_absolute_url }}" class="btn btn-primary">Подробнее</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
 </div>
-{% endfor %}
+</div>
+
 {% endblock %}
 
 

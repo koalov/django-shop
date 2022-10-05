@@ -4,22 +4,27 @@
 {% endblock %}
 {% block content %}
 
-<div class="product-detail">
-<img class="img-article-left thumb" src="{% if product.image %}{{product.image.url}}{% endif %}">
+{% include "ecomm/breadcrumb.html" %}
+<h3><a href="{{ product.category.get_absolute_url }}">{{product.category }}</a></h3>
 
-<h2>
-<a href="{{ product.category.get_absolute_url }}">{{product.category }}</a>
-</h2>
-
-<div class="product-info">
-    <h1>{{ product.name }}</h1>
-    <h3>{{ product.price }}</h3>
-    <form action="{% url 'cart:cart_add' product.id %}" method="post">
-    {{ cart_product_form }}
-    {% csrf_token %}
-    <input type="submit" value="Add to cart">
-    </form>
-    <p>{{ product.description }}</p>
+<div class="height d-flex align-items-center">
+    <div class="d-flex justify-content-between align-items-center">
+        <div class="mt-2">
+             <div class="mt-5">
+                 <h1 class="main-heading mt-0">{{ product.name }}</h1>
+                 <h5 class="mb-0">Price: {{ product.price }}</h5>
+                 <form action="{% url 'cart:cart_add' product.id %}" method="post">
+                    {{ cart_product_form }}
+                    {% csrf_token %}
+                    <input type="submit" value="Add to cart">
+                 </form>
+                 <p>{{ product.description }}</p>
+            </div>
+        </div>
+        <div class="image">
+            <img class="img-article-left thumb" src="{% if product.image %}{{product.image.url}}{% endif %}">
+        </div>
+    </div>
 </div>
 
 

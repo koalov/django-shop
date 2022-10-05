@@ -2,7 +2,9 @@
 
 {% block title %} Купить {{ category.name }}{% endblock title %}
 
+
 {% block content %}
+{% include "ecomm/breadcrumb.html" %}
 <h1>{{ category.name }}</h1>
 
 {% for child in child_cat %}

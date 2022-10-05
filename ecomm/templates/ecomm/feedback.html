@@ -7,7 +7,39 @@
 </h1>
 <iframe width="1000" height="450"
         style="border:0" loading="lazy"
-        allowfullscreen src="https://www.google.com/maps/embed/v1/place?q=place_id:ChIJxZ5aCIExxkARZAneoD2Z30g&key=AIzaSyBQSrqOT1hWWhXcjDVTiMnLNEE0hmk5iC8"></iframe>
+        allowfullscreen src="https://www.google.com/maps/embed/v1/place?q=place_id:ChIJxZ5aCIExxkARZAneoD2Z30g&key={{ myapi }}"></iframe>
+<h1>
+Написать нам
+</h1>
+<div>
+    <span>SEND EMAILS</span>
+    <div>
+        <form action="/send_mail" method="POST" enctype="multipart/form-data" autocomplete="off">
+            {% csrf_token %}
+            <div>
+                <span>Name</span>
+                <input type="text" class="form-control" name="name" maxlength="40" placeholder="Your Name" required>
+            </div>
+             <div>
+                <span>Email</span>
+                <input type="email" class="form-control" name="email" maxlength="40" placeholder="Your email" required>
+            </div>
+            <div>
+                <textarea class="from-control" rows="7" name="message" placeholder="Type your message here.." required></textarea>
+            </div>
+            <button type="submit">Send email</button>
+        </form>
+        <!--Message from Backend-->
+        {% for message in messages %}
+            {% if message.tags == 'success' %}
+                <div>{{ message }}
+                    <a href="{% url 'ecomm:feedback' %}"></a>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+</div>
+
 
 {% endblock %}
 

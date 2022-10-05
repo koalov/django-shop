@@ -26,6 +26,7 @@ urlpatterns = [
     path('account/', include('allauth.urls')),
     path('account/', include('users.urls')),
     path('__debug__/', include('debug_toolbar.urls')),
+    path('', include('send_mail.urls')),
     ]
 
 

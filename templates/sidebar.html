@@ -1,0 +1,55 @@
+<div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 min-vh-100 bg-dark">
+    <a href="/" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-decoration-none">
+        <span class="fs-5 d-none d-sm-inline">Filters</span>
+    </a>
+
+    <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
+        {% for spec in specification %}
+        <li>
+            <a href="#submenu{{ forloop.counter }}" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
+                <i class="fs-4 bi-speedometer2"></i> <span class="ms-1 d-none d-sm-inline">{{ spec }}</span></a>
+            <ul class="collapse show nav flex-column ms-1" id="submenu{{ forloop.counter }}" data-bs-parent="#menu">
+                {% if forloop.counter == 1 %}
+                {% for s in size %}
+                <li class="w-100">
+                    <a href="#" class="nav-link px-0"><span class="d-none d-sm-inline">{{ s }}</span></a>
+                </li>
+                {% endfor %}
+                {% endif %}
+
+                {% if forloop.counter == 2 %}
+                {% for c in color %}
+                <li class="w-100">
+                    <a href="#" class="nav-link px-0"><span class="d-none d-sm-inline">{{ c }}</span></a>
+                </li>
+                {% endfor %}
+                {% endif %}
+
+                {% if forloop.counter == 3 %}
+                {% for b in brand %}
+                <li class="w-100">
+                    <a href="#" class="nav-link px-0"><span class="d-none d-sm-inline">{{ b }}</span></a>
+                </li>
+                {% endfor %}
+                {% endif %}
+
+                {% if forloop.counter == 4 %}
+                {% for c in country %}
+                <li class="w-100">
+                    <a href="#" class="nav-link px-0"><span class="d-none d-sm-inline">{{ c }}</span></a>
+                </li>
+                {% endfor %}
+                {% endif %}
+
+                {% if forloop.counter == 5 %}
+                {% for m in material %}
+                <li class="w-100">
+                    <a href="#" class="nav-link px-0"><span class="d-none d-sm-inline">{{ m }}</span></a>
+                </li>
+                {% endfor %}
+                {% endif %}
+            </ul>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
