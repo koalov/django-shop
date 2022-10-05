@@ -52,7 +52,7 @@ INSTALLED_APPS = [
     'users',
     'debug_toolbar',
     'send_mail',
-
+    'search'
 ]
 
 MIDDLEWARE = [

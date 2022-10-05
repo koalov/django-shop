@@ -1,0 +1,9 @@
+{% load i18n %}
+<form class="last" method="GET" action={% url "query" %}>
+    <input class="form-row" style="width: 105px; margin-right: 0" type="text"
+           placeholder={% trans "Search" %} name='q' aria-label={% trans "Search" %}
+                   value='{{ request.GET.q }}'>
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit"
+            style="margin-left: 0">
+        {% trans 'Search' %}</button>
+</form>
