@@ -1,25 +1,36 @@
 {% extends 'ecomm/base.html' %}
 {% load i18n %}
 {load account %}
-
-{% block title %}{{ current_user.get_short_name }}{% endblock %}
 {% block content %}
-    <h1>{{ current_user.get_short_name}}</h1>
-    <p>
-        <a href="{% url 'account_change_password' %}">
-            {% trans 'Change password' %}</a> |
-        <a href="{% url 'account_email' %}">{% trans 'Change or add E-mail' %}</a>
-    </p>
-    <p>
-        <strong>{% trans 'Username' %}:</strong> {{ current_user.username }}
-    </p>
-    <p>
-        <strong>{% trans 'Email' %}:</strong> {{ current_user.email }}
-    </p>
-    {% if current_user.first_name or current_user.last_name %}
-        <p>
-            <strong>{% trans 'Name' %}</strong> {{ current_user.get_full_name }}
-        </p>
-    {% endif %}
+{% load static %}
+{% if user.is_authenticated %}
+<a href="{% url 'users:profile_update' %}">Update Profile</a> | <a href="{% url 'account_email' %}">Manage Email</a>  | <a href="{% url 'account_change_password' %}">Change Password</a> |
+<a href="{% url 'account_logout' %}">Logout</a>
+{% endif %}
+<p>Welcome, {{ user.username }}.</p>
 
-{%endblock content %}
+
+<h2>My Profile</h2>
+{% if not user.profile.account_verified %}
+    (Unverified email.)
+    {% endif %}
+<form method="POST" enctype="multipart/form-data">
+<ul>
+    <li>First Name: {{ user.first_name }} </li>
+    <li>Last Name: {{ user.last_name }} </li>
+    <li>Organization: {{ user.profile.org }} </li>
+    <li>Telephone: {{ user.profile.telephone }} </li>
+    <li>Sex: {{ user.profile.sex }} </li>
+    <li>birthday: {{ user.profile.birthday }} </li>
+</ul>
+    <div class="column is-4">
+        {% if user.profile.photo %}
+            <div class="box">
+                <figure class="image">
+                    <img src="{{ user.profile.photo.url }}" />
+                </figure>
+            </div>
+        {% endif %}
+    </div>
+
+{% endblock %}
