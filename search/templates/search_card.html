@@ -1,0 +1,11 @@
+{% load i18n %}
+<div class="card" style="width: 12rem; height: 18rem">
+  <img src="{% if product.image %}{{ product.image.url }}{% endif %}"
+       class="card-img-top w-50 py-3 mx-auto"
+       alt="{% trans "This product have no image" %}">
+  <div class="card-body">
+      <a href="{{ product.get_absolute_url }}" class="link-dark stretched-link">
+          <h5 class="card-title">{{ product.get_short_name }}</h5></a>
+    <p class="card-text">{% trans "Price" %}: {{ product.price }}₴</p>
+  </div>
+</div>

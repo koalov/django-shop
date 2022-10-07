@@ -85,6 +85,16 @@ class Product(models.Model):
     image_img.short_description = 'Картинка'
     image_img.allow_tags = True
 
+    def get_short_description(self):
+        if len(self.description) < 40:
+            return self.description
+        return self.description[:40]
+
+    def get_short_name(self):
+        if len(self.name) < 40:
+            return self.name
+        return self.name[:40]
+
 
 class ProductSpecificationValue(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
