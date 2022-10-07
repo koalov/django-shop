@@ -17,6 +17,9 @@ class SearchProductView(ListView):
         print(request.GET)
         query = request.GET.get('q', None)
         if query is not None:
-            lookups = Q(name__contains=query) | Q(description__icontains=query)
-            return Product.objects.filter(lookups)
+            lookups = (Q(name__icontains=query) |
+                       Q(description__icontains=query) |
+                       Q(slug__icontains=query) |
+                       Q(price__icontains=query))
+            return Product.objects.filter(lookups).select_related('category')
         return Product.objects.none()
