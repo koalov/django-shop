@@ -1,6 +1,45 @@
+from django.db.models import Q
 from django.db import models
 from django.urls import reverse
 from mptt.models import MPTTModel, TreeForeignKey
+
+
+class ProductQuerySet(models.query.QuerySet):
+
+    def active(self):
+        return self.filter(available=True)
+
+    def featured(self):
+        return self.filter(featured=True, available=True)
+
+    def search(self, query):
+        lookups = (Q(name__icontains=query) |
+                   Q(description__icontains=query) |
+                   Q(slug__icontains=query) |
+                   Q(price__icontains=query) |
+                   Q(tag__name__icontains=query))
+        return self.filter(lookups).distinct()
+
+
+class ProductManager(models.Manager):
+
+    def get_query_set(self):
+        return ProductQuerySet(self.model, using=self._db)
+
+    def all(self):
+        return self.get_query_set().active()
+
+    def featured(self):
+        return self.get_query_set().featured()
+
+    def get_by_id(self, pk):
+        qs = self.get_queryset().filter(pk=pk)
+        if qs.count() == 1:
+            return qs.first()
+        return None
+
+    def search(self, query):
+        return self.get_query_set().search(query)
 
 
 class Category(MPTTModel):
@@ -60,8 +99,11 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Цена')
     quantity = models.IntegerField(verbose_name='Количество', default=20)
     available = models.BooleanField(default=True, verbose_name='Опубликован')
+    featured = models.BooleanField(default=False, verbose_name='Избранное')
     created = models.DateTimeField(auto_now_add=True, verbose_name='Время создания')
     uploaded = models.DateTimeField(auto_now=True, verbose_name='Время обновления')
+
+    objects = ProductManager()
 
     class Meta:
         ordering = ('id',)
@@ -107,3 +149,6 @@ class ProductSpecificationValue(models.Model):
 
     def __str__(self):
         return self.value
+
+
+
