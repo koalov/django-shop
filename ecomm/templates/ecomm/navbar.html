@@ -46,7 +46,7 @@
           <li class="nav-item">
               <a href="{% url 'cart:cart_detail' %}" class="nav-link">Cart</a>
           </li>
-            {% include 'search_form.html' %}
+           {% include 'search_form.html' %}
           {% block account %}
                 {% if request.user.is_authenticated %}
                     <li class="nav-item">

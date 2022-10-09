@@ -53,7 +53,8 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'send_mail',
     'search',
-    'tags'
+    'tags',
+    'filter',
 ]
 
 MIDDLEWARE = [
@@ -167,23 +168,6 @@ MEDIA_URL = '/media/'
 if DEBUG:
     MEDIA_URL = 'media/'
 
-LOGIN_REDIRECT_URL = '/'
-
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-
-LOGIN_URL = '/'
-
-GOOGLE_MAPS_API_KEY = env('GOOGLE_MAPS_API_KEY')
-
-INTERNAL_IPS = [
-    "127.0.0.1",
-    ]
-
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'blinov.maxim@gmail.com'
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
-EMAIL_USE_TLS = True
 LOGIN_REDIRECT_URL = '/'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

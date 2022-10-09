@@ -1,5 +1,5 @@
-from django.db.models import Q
 from django.db import models
+from django.db.models import Q
 from django.urls import reverse
 from mptt.models import MPTTModel, TreeForeignKey
 
@@ -26,7 +26,7 @@ class ProductManager(models.Manager):
     def get_query_set(self):
         return ProductQuerySet(self.model, using=self._db)
 
-    def all(self):
+    def active_all(self):
         return self.get_query_set().active()
 
     def featured(self):
@@ -102,7 +102,6 @@ class Product(models.Model):
     featured = models.BooleanField(default=False, verbose_name='Избранное')
     created = models.DateTimeField(auto_now_add=True, verbose_name='Время создания')
     uploaded = models.DateTimeField(auto_now=True, verbose_name='Время обновления')
-
     objects = ProductManager()
 
     class Meta:
@@ -149,6 +148,3 @@ class ProductSpecificationValue(models.Model):
 
     def __str__(self):
         return self.value
-
-
-

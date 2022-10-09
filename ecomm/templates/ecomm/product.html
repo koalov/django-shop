@@ -5,35 +5,45 @@
 {% block content %}
 
 {% include "ecomm/breadcrumb.html" %}
-<h3><a href="{{ product.category.get_absolute_url }}">{{product.category }}</a></h3>
 
-<div class="height d-flex align-items-center">
-    <div class="d-flex justify-content-between align-items-center">
-        <div class="mt-2">
-             <div class="mt-5">
-                 <h1 class="main-heading mt-0">{{ product.name }}</h1>
-                 <h5 class="mb-0">Price: {{ product.price }}</h5>
-                 <form action="{% url 'cart:cart_add' product.id %}" method="post">
-                    {{ cart_product_form }}
-                    {% csrf_token %}
-                    <input type="submit" value="Add to cart">
-                 </form>
-                 <p>{{ product.description }}</p>
+<div class="container-lg">
+    <div class="row">
+
+            <div class="col">
+                <img src="{% if product.image %}{{product.image.url}}{% endif %}" class="img-fluid">
             </div>
-        </div>
-        <div class="image">
-            <img class="img-article-left thumb" src="{% if product.image %}{{product.image.url}}{% endif %}">
-        </div>
+            <div class="col">
+                <div class="info">
+                    <div class="mb-4">
+                        <h1 class="title">{{ product.name }}</h1>
+                    </div>
+                    <div class="mt-2">
+                        <h5 class="text">Цена: {{ product.price }}</h5>
+                        <p class="text">
+                            <form action="{% url 'cart:cart_add' product.id %}" method="post">
+                                {{ cart_product_form }}
+                                {% csrf_token %}
+                                <input class="btn btn-success" type="submit" value="Add to cart">
+                             </form>
+                        </p>
+                    </div>
+                    <div class="text mt-4">
+                        <h2 class="text">Описание</h2>
+                        <p>{{ product.description }}</p>
+                    </div>
+                </div>
+            </div>
+    </div>
+    <div class="col">
+    <hr/>
+    <h3 class="text">Характеристики товара:</h3>
+        {% for spec in product.productspecificationvalue_set.all %}
+            <p>{{ spec.specification }} - {{ spec.value }}</p>
+        {% endfor %}
     </div>
 </div>
 
 
-<div class="product_charc">
-<h4>Характеристики товара:</h4>
-    {% for spec in product.productspecificationvalue_set.all %}
-<p>{{ spec.specification }} - {{ spec.value }}</p>
-    {% endfor %}
-</div></div>
 {% endblock %}
 
 
