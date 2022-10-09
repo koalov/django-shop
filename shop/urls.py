@@ -28,7 +28,8 @@ urlpatterns = [
     path('account/', include('users.urls')),
     path('__debug__/', include('debug_toolbar.urls')),
     path('', include('send_mail.urls')),
-    path('search/', include('search.urls'))
+    path('search/', include('search.urls')),
+    path('filter/', include('filter.urls'))
     ]
 
 

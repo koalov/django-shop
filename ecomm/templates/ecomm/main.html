@@ -10,11 +10,11 @@
     <div class="row py-2">
         <div class="col">
             <div class="card" style="height: 18rem; width: 12rem">
-                        <img class="card-img-top w-50 py-3 mx-auto"
-                             src="{% if product.image %}
-                                    {{ product.image.url }}
-                                    {% endif %}"
-                             alt="{% trans "This product have no image" %}">
+                <img class="card-img-top w-50 py-3 mx-auto"
+                     src="{% if product.image %}
+                            {{ product.image.url }}
+                            {% endif %}"
+                     alt="{% trans "This product have no image" %}">
                     <div class="card-body">
                         <h5 class="card-title">
                             <a href="{{ product.get_absolute_url }}"
@@ -24,9 +24,9 @@
                         </h5>
                         <p class="card-text">Цена: {{ product.price }}₴</p>
                     </div>
-                <div class="card-footer">
-                    <a href="{{ product.get_absolute_url }}" class="btn btn-primary">Подробнее</a>
-                </div>
+{#                <div class="card-footer">#}
+{#                    <a href="{{ product.get_absolute_url }}" class="btn btn-primary">Подробнее</a>#}
+{#                </div>#}
             </div>
         </div>
     </div>

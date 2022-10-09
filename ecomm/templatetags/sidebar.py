@@ -21,6 +21,7 @@ def get_sidebar_info(products, *args, **kwargs):
     spec_material = list(ProductSpecificationValue.objects.filter(specification_id=5).distinct().values('value'))
 
     for product in products:
+
         spec = product.productspecificationvalue_set.all()
         for s in spec:
             if s.specification not in specification:
@@ -51,4 +52,5 @@ def get_sidebar_info(products, *args, **kwargs):
             'size': size,
             'brand': brand,
             'material': material,
-            'country': country}
+            'country': country,
+            'product': product}

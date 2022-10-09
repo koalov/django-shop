@@ -1,0 +1,27 @@
+{% extends 'ecomm/base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+<div class="container">
+    <h1>Товары по запросу "{{ filter_name }}"</h1>
+    <div class="row row-cols-4">
+        {% for value in values %}
+        <div class="col">
+            <div class="card">
+                <img src="{% if value.product.image %}{{ value.product.image.url }}{% endif %}" class="card-img-top">
+                <div class="card-body">
+                    <h5 class="card-title"><a href="{{ value.product.get_absolute_url }}">{{ value.product.name }}</a></h5>
+                    <p class="card-text">{{ value.product.description|truncatechars:100}}</p>
+                    <p class="card-text">Цена: {{ value.product.price }}</p>
+                </div>
+                <div class="card-footer">
+                    <a href="{{ value.product.get_absolute_url }}" class="btn btn-primary">Подробнее</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{%endblock content %}

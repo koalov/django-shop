@@ -12,15 +12,15 @@
                 {% if forloop.counter == 1 %}
                 {% for s in size %}
                 <li class="w-100">
-                    <a href="#" class="nav-link px-0"><span class="d-none d-sm-inline">{{ s }}</span></a>
+                    <a href="/filter?query={{ s }}&product_type={{ product.category.name }}" class="nav-link px-0"><span class="d-none d-sm-inline">{{ s }}</span></a>
                 </li>
                 {% endfor %}
                 {% endif %}
 
                 {% if forloop.counter == 2 %}
-                {% for c in color %}
+                {% for col in color %}
                 <li class="w-100">
-                    <a href="#" class="nav-link px-0"><span class="d-none d-sm-inline">{{ c }}</span></a>
+                    <a href="/filter?query={{ сol }}&product_type={{ product.category.name }}" class="nav-link px-0"><span class="d-none d-sm-inline">{{ col }}</span></a>
                 </li>
                 {% endfor %}
                 {% endif %}
@@ -28,15 +28,15 @@
                 {% if forloop.counter == 3 %}
                 {% for b in brand %}
                 <li class="w-100">
-                    <a href="#" class="nav-link px-0"><span class="d-none d-sm-inline">{{ b }}</span></a>
+                    <a href="/filter?query={{ b }}&product_type={{ product.category.name }}" class="nav-link px-0"><span class="d-none d-sm-inline">{{ b }}</span></a>
                 </li>
                 {% endfor %}
                 {% endif %}
 
                 {% if forloop.counter == 4 %}
-                {% for c in country %}
+                {% for cou in country %}
                 <li class="w-100">
-                    <a href="#" class="nav-link px-0"><span class="d-none d-sm-inline">{{ c }}</span></a>
+                    <a href="/filter?query={{cou}}&product_type={{ product.category.name }}" class="nav-link px-0"><span class="d-none d-sm-inline">{{ cou }}</span></a>
                 </li>
                 {% endfor %}
                 {% endif %}
@@ -44,7 +44,7 @@
                 {% if forloop.counter == 5 %}
                 {% for m in material %}
                 <li class="w-100">
-                    <a href="#" class="nav-link px-0"><span class="d-none d-sm-inline">{{ m }}</span></a>
+                    <a href="/filter?query={{ m }}&product_type={{ product.category.name }}" class="nav-link px-0"><span class="d-none d-sm-inline">{{ m }}</span></a>
                 </li>
                 {% endfor %}
                 {% endif %}

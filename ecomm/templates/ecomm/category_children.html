@@ -11,8 +11,10 @@
 <div class="container-fluid">
     <div class="row row-cols-5">
         <div class="col">
-            {% load sidebar %}
-            {% get_sidebar_info products %}
+            {% if products %}
+                {% load sidebar %}
+                {% get_sidebar_info products %}
+            {% endif %}
         </div>
         {% for product in products %}
         <div class="col">

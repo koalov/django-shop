@@ -52,7 +52,9 @@ INSTALLED_APPS = [
     'users',
     'debug_toolbar',
     'send_mail',
-    'search'
+    'search',
+    'tags',
+    'filter',
 ]
 
 MIDDLEWARE = [
