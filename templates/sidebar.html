@@ -1,4 +1,6 @@
-<div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 min-vh-100 bg-dark">
+
+
+<div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 bg-dark">
     <a href="/" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-decoration-none">
         <span class="fs-5 d-none d-sm-inline">Filters</span>
     </a>
@@ -18,9 +20,9 @@
                 {% endif %}
 
                 {% if forloop.counter == 2 %}
-                {% for col in color %}
+                {% for color in colors %}
                 <li class="w-100">
-                    <a href="/filter?query={{ сol }}&product_type={{ product.category.name }}" class="nav-link px-0"><span class="d-none d-sm-inline">{{ col }}</span></a>
+                    <a href="/filter?query={{ сolor }}&product_type={{ product.category.name }}" class="nav-link px-0"><span class="d-none d-sm-inline">{{ color }}</span></a>
                 </li>
                 {% endfor %}
                 {% endif %}
@@ -53,3 +55,4 @@
         {% endfor %}
     </ul>
 </div>
+

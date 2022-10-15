@@ -1,16 +1,17 @@
 {% extends 'ecomm/base.html' %}
-{% block title %}
-{{ product.name }}
-{% endblock %}
-{% block content %}
 
+{% block title %}
+    <title>{{ product.name }}</title>
+{% endblock %}
+
+{% block content %}
 {% include "ecomm/breadcrumb.html" %}
 
 <div class="container-lg">
     <div class="row">
 
             <div class="col">
-                <img src="{% if product.image %}{{product.image.url}}{% endif %}" class="img-fluid">
+                <img src="{% if product.image %}{{product.image_in_product.url}}{% endif %}" class="img-fluid">
             </div>
             <div class="col">
                 <div class="info">

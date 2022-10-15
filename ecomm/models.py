@@ -2,6 +2,8 @@ from django.db import models
 from django.db.models import Q
 from django.urls import reverse
 from mptt.models import MPTTModel, TreeForeignKey
+from imagekit.models import ImageSpecField
+from imagekit.processors import ResizeToFill
 
 
 class ProductQuerySet(models.query.QuerySet):
@@ -49,6 +51,7 @@ class Category(MPTTModel):
     available = models.BooleanField(default=True, verbose_name='Опубликован')
     parent = TreeForeignKey("self", on_delete=models.CASCADE, related_name='children', null=True, blank=True,
                             verbose_name='Родительская Категория')
+    image = models.ImageField(upload_to="category/%Y", null=True, blank=True, verbose_name="Фото")
 
     class MPTTMeta:
         order_insertion_by = ['name']
@@ -125,6 +128,21 @@ class Product(models.Model):
 
     image_img.short_description = 'Картинка'
     image_img.allow_tags = True
+
+    image_in_product = ImageSpecField(source='image',
+                                      processors=[ResizeToFill(636, 636)],
+                                      format='JPEG',
+                                      options={'quality': 60})
+
+    image_in_category = ImageSpecField(source='image',
+                                       processors=[ResizeToFill(304, 456)],
+                                       format='JPEG',
+                                       options={'quality': 60})
+
+    image_in_main = ImageSpecField(source='image',
+                                   processors=[ResizeToFill(95, 150)],
+                                   format='JPEG',
+                                   options={'quality': 60})
 
     def get_short_description(self):
         if len(self.description) < 40:

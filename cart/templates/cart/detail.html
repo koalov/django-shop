@@ -1,9 +1,12 @@
 {% extends "ecomm/base.html" %}
 {% load static %}
+
 {% block title %}
-    Your shopping cart
-{% endblock %}
+    <title>Корзина</title>
+{% endblock title %}
+
 {% block content %}
+    <div class="container-lg">
     <h1>Your shopping cart</h1>
     <table class="cart">
         <thead>
@@ -24,7 +27,7 @@
                         <a href="{{ product.get_absolute_url }}">
                             <img src="
                                 {% if product.image %}
-                                    {{ product.image.url }}
+                                    {{ product.image_in_main.url }}
                                 {% else %}
                                     {% static 'img/no_image.png' %}
                                 {% endif %}">
@@ -49,4 +52,5 @@
         <a href="{% url 'ecomm:home' %}" class="button light">Continue shopping</a>
         <a href="#" class="button">Checkout</a>
     </p>
+    </div>
 {% endblock %}

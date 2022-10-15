@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'search',
     'tags',
     'filter',
+    'imagekit',
 ]
 
 MIDDLEWARE = [
@@ -183,5 +184,10 @@ INTERNAL_IPS = [
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'blinov.maxim@gmail.com'
-EMAIL_HOST_PASSWORD =os.environ.get('EMAIL_HOST_PASSWORD')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 EMAIL_USE_TLS = True
+
+
+# Liqpay keys
+LIQPAY_PUBLIC_KEY = env('LIQPAY_PUBLIC_KEY')
+LIQPAY_PRIVATE_KEY = env('LIQPAY_PRIVATE_KEY')

@@ -9,7 +9,7 @@
         {% for value in values %}
         <div class="col">
             <div class="card">
-                <img src="{% if value.product.image %}{{ value.product.image.url }}{% endif %}" class="card-img-top">
+                <img src="{% if value.product.image %}{{ value.product.image_in_category.url }}{% endif %}" class="card-img-top">
                 <div class="card-body">
                     <h5 class="card-title"><a href="{{ value.product.get_absolute_url }}">{{ value.product.name }}</a></h5>
                     <p class="card-text">{{ value.product.description|truncatechars:100}}</p>
