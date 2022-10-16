@@ -5,7 +5,8 @@
 {% endblock %}
 
 {% block content %}
-{% include "ecomm/breadcrumb.html" %}
+    {% load breadcrumbs %}
+    {% get_breadcrumbs_product product %}
 
 <div class="container-lg">
     <div class="row">

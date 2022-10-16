@@ -6,7 +6,9 @@
 
 
 {% block content %}
-{% include "ecomm/breadcrumb.html" %}
+    {% load breadcrumbs %}
+    {% get_breadcrumbs_category category %}
+
 <div class="container-lg">
     <div class="row">
         <div class="col"><h1>{{ category.name }}</h1></div>

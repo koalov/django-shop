@@ -1,10 +1,12 @@
 {% extends 'ecomm/base.html' %}
 
+{% block title %}<title>{{ title }}</title>{% endblock title %}
 {% block content %}
-<title>{{ title }}</title>
-<h1>
-Что то нужное
-</h1>
+    {% load breadcrumbs %}
+    {% get_breadcrumbs_other title %}
 
+<div class="container-lg pt-2">
+    <h1>Что-то нужное</h1>
+</div>
 
 {% endblock %}
