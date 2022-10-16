@@ -2,6 +2,7 @@
 {% load mptt_tags %}
 {% load i18n %}
 {% load account %}
+{% url 'cart:cart_detail' as cart_url %}
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark nav-fill">
   <div class="container-fluid">
@@ -43,8 +44,17 @@
           <li class="nav-item">
               <a href="{% url 'ecomm:something' %}" class="nav-link">Something</a>
           </li>
-          <li class="nav-item">
-              <a href="{% url 'cart:cart_detail' %}" class="nav-link">Cart</a>
+          <li class="nav-image">
+              <a class="nav-link" href="{{ cart_url }}" >
+                  {% if request.session.counter_items %}
+                    {{ request.session.counter_items }}
+                  <img class="inline_label" alt="..." width="30" height="24"
+                       src="{% static 'ecomm/images/shopping_cart_full.svg' %} ">
+                  {% else %}
+                  <img class="inline_label" alt="..." width="30" height="24"
+                       src="{% static 'ecomm/images/shopping_cart.svg' %} ">
+                  {% endif %}
+              </a>
           </li>
            {% include 'search_form.html' %}
           {% block account %}

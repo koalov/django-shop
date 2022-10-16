@@ -3,9 +3,9 @@ from django.conf import settings
 from ecomm.models import Product
 
 
-class Cart(object):
+class CartLogic:
 
-    def __init__(self, request):
+    def __init__(self, request, *args, **kwargs):
         """
         Инициализируем корзину
         """
@@ -29,6 +29,7 @@ class Cart(object):
         else:
             self.cart[product_id]['quantity'] += quantity
         self.save()
+        self.session['counter_items'] = self.counter()
 
     def save(self):
         # Обновление сессии cart
@@ -43,6 +44,7 @@ class Cart(object):
         product_id = str(product.id)
         if product_id in self.cart:
             del self.cart[product_id]
+            self.session['counter_items'] = self.counter()
             self.save()
 
     def __iter__(self):
@@ -64,7 +66,7 @@ class Cart(object):
         """
         Подсчет всех товаров в корзине.
         """
-        return sum(item['quantity'] for item in self.cart.values())
+        return sum([item['quantity'] for item in self.cart.values()])
 
     def get_total_price(self):
         """
@@ -76,4 +78,12 @@ class Cart(object):
     def clear(self):
         # удаление корзины из сессии
         del self.session[settings.CART_SESSION_ID]
+        self.session['counter_items'] = self.counter()
         self.session.modified = True
+
+    def counter(self):
+        """Returns quantity of the products in the cart"""
+        counter = 0
+        for item in self.cart.values():
+            counter += item.get('quantity', 0)
+        return counter
