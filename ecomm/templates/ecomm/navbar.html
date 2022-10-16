@@ -2,10 +2,12 @@
 {% load mptt_tags %}
 {% load i18n %}
 {% load account %}
-{% url 'cart:cart_detail' as cart_url %}
+{% load cache %}
+
+{% cache 60 navbar%}
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark nav-fill">
-  <div class="container-fluid">
+  <div class="container-lg">
     <a class="navbar-brand" href="{% url 'ecomm:home' %}">
       <img src="{% static 'ecomm/images/logo.jpg' %}" width="40" height="40" alt="" class="d-inline-block align-text-top">
     </a>
@@ -18,65 +20,48 @@
               <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                 Catalog
               </button>
-
-              <ul class="dropdown-menu dropdown-menu-dark">
+              <ul class="dropdown-menu dropdown-menu-dark" data-bs-toggle="dropdown">
                   {% for c in category_tree %}
-                        {% if c.is_root_node %}
-                        <li><a class="dropdown-item" href="{{ c.get_absolute_url}}">{{ c.name }} &raquo;</a>
-                        {% endif %}
-                            {% if c.is_child_node %}
-                            <div class="dropdown-menu dropdown-submenu">
-                                <a class="dropdown-item" href="{{ c.get_absolute_url}}">{{ c.name }}</a>
-                            </div>
-                            {% endif %}
-                        </li>
+                    {% if c.is_root_node %}
+                    <li><a class="dropdown-item" href="{{ c.get_absolute_url}}">{{ c.name }}</a></li>
+                    {% else %}
+                        <ul class="dropdown-submenu-left">
+                            <li><a class="dropdown-item" href="{{ c.get_absolute_url}}">{{ c.name }}</a></li>
+                        </ul>
+
+                    {% endif %}
                   {% endfor %}
               </ul>
+          </li>
+          <li class="nav-item">
+            {% include 'search_form.html' %}
+          </li>
 
+          <li class="nav-item">
+              <a href="{% url 'cart:cart_detail' %}" class="nav-link">Cart</a>
+          </li>
 
-          </li>
-          <li class="nav-item">
-              <a href="{% url 'ecomm:about' %}" class="nav-link">About</a>
-          </li>
-          <li class="nav-item">
-              <a href="{% url 'ecomm:feedback' %}" class="nav-link">Feedback</a>
-          </li>
-          <li class="nav-item">
-              <a href="{% url 'ecomm:something' %}" class="nav-link">Something</a>
-          </li>
-          <li class="nav-image">
-              <a class="nav-link" href="{{ cart_url }}" >
-                  {% if request.session.counter_items %}
-                    {{ request.session.counter_items }}
-                  <img class="inline_label" alt="..." width="30" height="24"
-                       src="{% static 'ecomm/images/shopping_cart_full.svg' %} ">
-                  {% else %}
-                  <img class="inline_label" alt="..." width="30" height="24"
-                       src="{% static 'ecomm/images/shopping_cart.svg' %} ">
-                  {% endif %}
-              </a>
-          </li>
-           {% include 'search_form.html' %}
           {% block account %}
-                {% if request.user.is_authenticated %}
-                    <li class="nav-item">
-                        <a href="{% url 'users:profile' %}" class="nav-link">{% trans 'Welcome' %}&nbsp;{{ user.username }}</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{% url 'account_logout' %}" class="nav-link">{% trans 'Logout' %}</a>
-                    </li>
-                {% else %}
-                    <li class="nav-item">
-                        <a href="{% url 'account_signup' %}" class="nav-link">{% trans 'Register' %}</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{% url 'account_login' %}" class="nav-link">{% trans 'Login'%}</a>
-                    </li>
-                {%endif %}
-            {% endblock account %}
+          {% if request.user.is_authenticated %}
+
+          <li class="nav-item">
+              <a href="{% url 'users:profile' %}" class="nav-link">{% trans 'Welcome' %}&nbsp;{{ user.username }}</a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'account_logout' %}" class="nav-link">{% trans 'Logout' %}</a>
+          </li>
+          {% else %}
+          <li class="nav-item">
+              <a href="{% url 'account_signup' %}" class="nav-link">{% trans 'Register' %}</a>
+          </li>
+          <li class="nav-item">
+              <a href="{% url 'account_login' %}" class="nav-link">{% trans 'Login'%}</a>
+          </li>
+          {%endif %}
+          {% endblock account %}
         </ul>
       </div>
   </div>
 </nav>
 
-
+{% endcache %}

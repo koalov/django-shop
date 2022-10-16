@@ -1,14 +1,31 @@
 {% extends 'ecomm/base.html' %}
+{% load static %}
 
-{% block title %} Купить {{ category.name }}{% endblock title %}
+{% block title %}
+    <title>Купить {{ category.name }} в Украине</title>
+{% endblock title %}
 
 
 {% block content %}
-{% include "ecomm/breadcrumb.html" %}
-<h1>{{ category.name }}</h1>
+    {% load breadcrumbs %}
+    {% get_breadcrumbs_category category %}
 
-{% for child in child_cat %}
-<p><a href="{% url 'ecomm:category' slug=child.slug %}">{{ child.name }}</a></p>
-{% endfor %}
-
+<div class="container-lg">
+    <h1>{{ category.name }}</h1>
+    <div class="row row-cols-3">
+        {% for child in child_cat %}
+            <div class="col">
+            <a href="{% url 'ecomm:category' slug=child.slug %}">
+                <div class="card">
+                    {% if child.image %}
+                    <img src="{{ child.image.url }}" width="300" height="300" class="card-img-top">
+                    {% else %}
+                    <img src="{% static 'ecomm/images/defoult.jpeg' %}" width="300" height="300" class="card-img-top">
+                    {% endif %}
+                    <h3>{{ child.name }}</h3>
+                </div></a>
+            </div>
+        {% endfor %}
+    </div>
+</div>
 {% endblock content %}

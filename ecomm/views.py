@@ -3,15 +3,34 @@ from django.shortcuts import render, get_object_or_404
 from .models import *
 from cart.form import CartAddProductForm
 from shop.settings import GOOGLE_MAPS_API_KEY
+from django.views.generic import DetailView, ListView
 
 
 def homepage(request):
     products = Product.objects.filter(available=True)
-
     context = {'products': products,
                'title': 'Главная страница'}
 
     return render(request, 'ecomm/main.html', context=context)
+
+
+# class ParentCategoryDetailView(DetailView):
+#     model = Category
+#     template_name = 'ecomm/parent.html'
+#     context_object_name = 'parent_category'
+#
+#
+# class ChildrenCategoryDetailView(DetailView):
+#     model = Category
+#     template_name = 'ecomm/children.html'
+#     context_object_name = 'children_category'
+#     paginate_by = 5
+#     slug_field = 'slug'
+#
+#     def get_context_data(self, *, object_list=None, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         context['products'] = self.object.product_set.all()
+#         return context
 
 
 def category_page(request, slug):
@@ -26,8 +45,13 @@ def category_page(request, slug):
         products = category.product_set.all()
         context = {
             'products': products,
-            'category': category
-        }
+            'category': category}
+
+        sort = request.GET.get('sort')
+        if sort:
+            products = category.product_set.all()[:int(sort)]
+            context['products'] = products
+
         return render(request, 'ecomm/category_children.html', context=context)
 
 

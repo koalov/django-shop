@@ -1,0 +1,26 @@
+<div class="container-lg pt-2">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
+
+        {% if breadcrumbs_product %}
+            {% for item in breadcrumbs_product %}
+            {% if forloop.first %}
+            <li class="breadcrumb-item"><a href={% url 'ecomm:category' slug=item.slug %}>{{ item.name }}</a></li>
+            {% endif %}
+            {% if forloop.last %}
+            <li class="breadcrumb-item active" aria-current="page">{{ item.name }}</li>
+            {% endif %}
+            {% endfor %}
+        {% endif %}
+
+        {% if breadcrumbs_category %}
+            <li class="breadcrumb-item active" aria-current="page">{{ breadcrumbs_category }}</li>
+        {% endif %}
+
+        {% if breadcrumbs_other %}
+            <li class="breadcrumb-item active" aria-current="page">{{ breadcrumbs_other }}</li>
+        {% endif %}
+      </ol>
+    </nav>
+</div>

@@ -10,4 +10,4 @@ menu = [{'title': "О сайте", 'url_name': 'about'},
 def get_category_tree(request):
     category = Category.objects.filter(parent=None)
     category_tree = category.get_descendants(include_self=True)
-    return {'category_tree': category_tree, 'menu': menu}
+    return {'category_tree': category_tree}
