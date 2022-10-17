@@ -23,6 +23,7 @@ from django.views.generic import TemplateView
 urlpatterns = [
     path('admin/', admin.site.urls),
     re_path(r'^cart/', include('cart.urls')),
+    re_path(r'^orders/', include('orders.urls')),
     path('', include('ecomm.urls', namespace='ecomm')),
     path('accounts/', include('allauth.urls')),
     path('account/', include('users.urls')),

@@ -3,7 +3,7 @@ from django.views.decorators.http import require_POST
 from ecomm.models import Product
 from .cart import CartLogic
 from .form import CartAddProductForm
-from .models import Cart
+# from .models import Cart
 
 
 # def cart_create(user=None):

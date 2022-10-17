@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'tags',
     'filter',
     'imagekit',
+    'orders',
 ]
 
 MIDDLEWARE = [
@@ -85,6 +86,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'ecomm.context_processors.get_category_tree',
+                'cart.context_processors.cart',
             ],
         },
     },
@@ -189,5 +191,5 @@ EMAIL_USE_TLS = True
 
 
 # Liqpay keys
-LIQPAY_PUBLIC_KEY = env('LIQPAY_PUBLIC_KEY')
-LIQPAY_PRIVATE_KEY = env('LIQPAY_PRIVATE_KEY')
+# LIQPAY_PUBLIC_KEY = env('LIQPAY_PUBLIC_KEY')
+# LIQPAY_PRIVATE_KEY = env('LIQPAY_PRIVATE_KEY')

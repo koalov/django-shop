@@ -29,7 +29,7 @@
                                 {% if product.image %}
                                     {{ product.image_in_main.url }}
                                 {% else %}
-                                    {% static 'img/no_image.png' %}
+                                    {% static 'ecomm/images/no_image.jpg' %}
                                 {% endif %}">
                         </a>
                     </td>
@@ -50,7 +50,7 @@
     </table>
     <p class="text-right">
         <a href="{% url 'ecomm:home' %}" class="button light">Continue shopping</a>
-        <a href="#" class="button">Checkout</a>
+        <a href="{% url "order_create" %}" class="button">Checkout</a>
     </p>
     </div>
 {% endblock %}
