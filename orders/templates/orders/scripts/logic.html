@@ -1,0 +1,238 @@
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <script>
+          function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+          }
+        const csrftoken = getCookie('csrftoken');
+            const orderForm = document.getElementById('orderForm');
+            const csrf = document.getElementsByName('csrfmiddlewaretoken')
+            const verify = document.getElementById('verify');
+            var delivery_method_option = document.getElementById('id_delivery_method');
+            var deliveryMethod = document.getElementById('delivery-method-box');
+            var deliveryCountry = document.getElementById('delivery_country_box');
+            var deliveryRegion = document.getElementById('delivery_region_box');
+            var deliveryCity = document.getElementById('delivery_city_box');
+            var postOfficeNumber = document.getElementById('post_office_number_box');
+            var paymentMethod = document.getElementById('payment_method_box');
+            var valuePayMethod = document.getElementById('id_payment_method');
+            var submitButton = document.getElementById('submit');
+            var liqPayButton = document.getElementById('liqpay');
+
+            verify.onclick = function(){
+                if (deliveryMethod.classList.contains('not-visible') === false){
+                    deliveryMethod.classList.add('not-visible');
+                }
+                if (deliveryCountry.classList.contains('not-visible') === false){
+                    deliveryCountry.classList.add('not-visible');
+                }
+                if (deliveryRegion.classList.contains('not-visible') === false){
+                    deliveryRegion.classList.add('not-visible');
+                }
+                if (deliveryCity.classList.contains('not-visible') === false){
+                    deliveryCity.classList.add('not-visible');
+                }
+                if (postOfficeNumber.classList.contains('not-visible') === false){
+                    postOfficeNumber.classList.add('not-visible');
+                }
+                if (paymentMethod.classList.contains('not-visible') === false){
+                    paymentMethod.classList.add('not-visible');
+                }
+                if (submitButton.classList.contains('not-visible') === false){
+                    submitButton.classList.add('not-visible');
+                }
+                if (liqPayButton.classList.contains('not-visible') === false){
+                    liqPayButton.classList.add('not-visible');
+                }
+                let number = prompt("Введіть номер з смс: ")
+                if (number === '1234') {
+                    alert("Вітаємо, номер Вашого телефону підтверджено!");
+                    deliveryMethod.classList.remove('not-visible');
+                } else {
+                    alert("Нажаль введений номер не є вірним. Спробуйте ще раз.");
+                }
+            }
+             
+        
+            $("#id_delivery_method").change(function () {
+              var url = $("#orderForm").attr("data-methods-url");  // get the url of the `method` view
+              var url2 = $("#orderForm").attr("data-pay-methods-url");
+              var methodId = $(this).val();  // get the selected method ID from the HTML input
+              id_delivery_country.innerHTML = "";
+              id_delivery_region.innerHTML = "";
+              id_delivery_city.innerHTML = "";
+              id_payment_method.innerHTML = "";
+        
+              $.ajax({                       // initialize an AJAX request
+                url: url,                    // set the url of the request (= localhost:8000/ajax/data-methods/)
+                data: {
+                  'method': methodId       // add the method id to the GET parameters 
+                },
+                success: function (data) {   // `data` is the return of the `data-methods` view function
+                  if (methodId == 3){
+                    paymentMethod.classList.remove('not-visible');
+                    $("#id_delivery_country").html(data); 
+                    $('#id_delivery_country option:selected').remove();
+                    $("#id_delivery_country option[value=1]").attr('selected', true);
+                    console.log(id_delivery_country.value)
+                    if (id_delivery_country.value == 1) {
+                      var url = $("#orderForm").attr("data-countries-url");  
+                        
+                      var countryId = 1;  
+                      id_delivery_region.innerHTML = "";
+                      id_delivery_city.innerHTML = "";
+                
+                      $.ajax({                       
+                        url: url,                    
+                        data: {
+                          'country': countryId       
+                        },
+                        success: function (data) {   
+                          $("#id_delivery_region").html(data);
+                          $('#id_delivery_region option:selected').remove();
+                          $("#id_delivery_region option[value=26]").attr('selected', 'selected').change();
+                          console.log(id_delivery_region.value); 
+                          if (id_delivery_region.value == 26) {
+                            var url = $("#orderForm").attr("data-regions-url"); 
+                            var regionId = 26;  
+                      
+                            $.ajax({                       
+                              url: url,                    
+                              data: {
+                                'region': regionId       
+                              },
+                              success: function (data) {   
+                                $("#id_delivery_city").html(data);
+                                $('#id_delivery_city option:selected').remove();
+                                if (deliveryCity.classList.contains('not-visible') == false){
+                                  deliveryCity.classList.add('not-visible');
+                                }
+                                if (postOfficeNumber.classList.contains('not-visible') == false){
+                                  postOfficeNumber.classList.add('not-visible');
+                                }
+                                $("#id_delivery_city option[value=17]").attr('selected', 'selected');
+                                console.log(id_delivery_city.value); 
+                              }
+                            });
+                          }
+                        }
+                      });
+                    }
+                      
+                    $.ajax({                       // initialize an AJAX request
+                      url: url2,                    // set the url of the request (= localhost:8000/ajax/data-pay-method/)
+                      data: {
+                        'pay_method': methodId       // add the pay_method id to the GET parameters 
+                      },
+                      success: function (data) {   // `data` is the return of the `pay-method` view function
+                        $("#id_payment_method").html(data);  // replace the contents of the pay_method input with the data that came from the server
+                        
+                      }
+                      
+                    });        
+                  } else {
+                  $("#id_delivery_country").html(data);  // replace the contents of the country input with the data that came from the server
+                  deliveryCountry.classList.remove('not-visible');
+                  
+                  $.ajax({                       // initialize an AJAX request
+                    url: url2,                    // set the url of the request (= localhost:8000/ajax/data-pay-method/)
+                    data: {
+                      'pay_method': methodId       // add the pay_method id to the GET parameters 
+                    },
+                    success: function (data) {   // `data` is the return of the `pay-method` view function
+                      $("#id_payment_method").html(data);  // replace the contents of the pay_method input with the data that came from the server
+                      
+                    }
+                    
+                  });
+
+                  $("#id_delivery_country").change(function () {
+                      var url = $("#orderForm").attr("data-countries-url");  
+                      
+                      var countryId = $(this).val();  
+                      id_delivery_region.innerHTML = "";
+                      id_delivery_city.innerHTML = "";
+                
+                      $.ajax({                       
+                        url: url,                    
+                        data: {
+                          'country': countryId       
+                        },
+                        success: function (data) {   
+                          $("#id_delivery_region").html(data);
+                          deliveryRegion.classList.remove('not-visible'); 
+                        }
+                      });
+                
+                    });
+                
+            
+                  $("#id_delivery_region").change(function () {
+                      var url = $("#orderForm").attr("data-regions-url"); 
+                      var regionId = $(this).val();  
+                
+                      $.ajax({                       
+                        url: url,                    
+                        data: {
+                          'region': regionId       
+                        },
+                        success: function (data) {   
+                          $("#id_delivery_city").html(data);
+                          deliveryCity.classList.remove('not-visible');
+                          postOfficeNumber.classList.remove('not-visible');
+                          paymentMethod.classList.remove('not-visible');  
+                        }
+                      });
+                
+                    });
+                  }
+                }
+                });
+              });
+                
+          $("#id_payment_method").change(function () { 
+            if (submitButton.classList.contains('not-visible') === false){
+              submitButton.classList.add('not-visible');
+          }
+          if (liqPayButton.classList.contains('not-visible') === false){
+              liqPayButton.classList.add('not-visible');
+          }
+            var methodId = $(this).val();
+            $("#id_payment_method").val(methodId);
+            console.log(id_payment_method.value); 
+            if (methodId == 2){
+              liqPayButton.classList.remove('not-visible');
+            } else {
+              submitButton.classList.remove('not-visible');
+            }
+      
+          });
+          
+              
+          {% comment %} orderForm.addEventListener('submit', e=>{
+            e.preventDefault()
+            console.log('submitted')
+
+            $.ajax({
+              type: 'POST',
+              url: '/create/',
+              data: {
+                'csrfmiddlewaretoken': csrf[0].value,
+
+              }
+            })
+          });  {% endcomment %}
+
+              
+        </script>

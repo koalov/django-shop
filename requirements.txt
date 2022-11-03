@@ -6,6 +6,6 @@ django-mptt==0.13.4
 django-allauth==0.51.0
 django-google-maps==0.13.0
 django-debug-toolbar==3.7.0
-django-imagekit==0.2.0
+django-imagekit==4.1.0
 
 

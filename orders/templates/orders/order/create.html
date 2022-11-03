@@ -1,24 +1,94 @@
 {% extends "ecomm/base.html" %}
+{% load i18n %}
+{% load static %}
 
-{% block title %}Checkout{% endblock %}
+
+{% block title %}
+    <title>Checkout</title>
+{% endblock %}
 
 {% block content %}
-    <h1>Checkout</h1>
-    <div class="order-info">
-        <h3>Your order</h3>
-        <ul>
-            {% for item in cart %}
-                <li>
-                    {{ item.quantity }}x {{ item.product.name }}
-                    <span>${{ item.total_price }}</span>
-                </li>
-            {% endfor %}
-        </ul>
-        <p>Total: ${{ cart.get_total_price }}</p>
-    </div>
-    <form action="." method="post" class="order-form">
-        {{ form.as_p }}
-        <p><input type="submit" value="Place order"></p>
+    <div class="container-lg">
+        <h1>Checkout</h1>
+        <div class="order-info">
+            <h3>Your order</h3>
+            <ul>
+                {% for item in cart %}
+                    <li>
+                        {{ item.quantity }} x {{ item.product.name }}
+                        <span>₴{{ item.total_price }}</span>
+                    </li>
+                {% endfor %}
+            </ul>
+            <p>Total: ₴{{ cart.get_total_price }}</p>
+        </div>
+        {% include '../scripts/styles.html' %}
+        
+        <form action="." id='orderForm' method="post"
+        data-methods-url="{% url 'ajax_load_countries' %}" 
+        data-countries-url="{% url 'ajax_load_regions' %}"
+        data-regions-url="{% url 'ajax_load_cities' %}"
+        data-pay-methods-url="{% url 'ajax_load_pay_methods' %}"
+        novalidate>
         {% csrf_token %}
-    </form>
+            <table id='order-box'>
+                <tbody>
+                    {{form_create.management_form}}
+                    {{form_create.errors}}
+                    <tr>
+                        <th>{{ form_create.first_name.label_tag }}</th>
+                        <td>{{ form_create.first_name }}<td>
+                    </tr>
+                    <tr>
+                        <th>{{ form_create.last_name.label_tag }}</th>
+                        <td>{{ form_create.last_name }}<td>
+                    </tr>
+                    <tr>
+                        <th>{{ form_create.phone_number.label_tag }}</th>
+                        <td>
+                            <div class="input-group">
+                                {{ form_create.phone_number }}
+                                <button class="btn btn-outline-primary not-visible" type="button"
+                                        id="verify">Verify</button>
+                            </div>
+                        <td>
+                    </tr>
+                    <tr id='delivery-method-box' class='not-visible'>
+                        <th>{{ form_create.delivery_method.label_tag }}</th>
+                        <td>{{ form_create.delivery_method }}<td>
+                    </tr>
+                    <tr id='delivery_country_box' class='not-visible'>
+                        <th>{{ form_create.delivery_country.label_tag }}</th>
+                        <td>{{ form_create.delivery_country }}<td>
+                    </tr>
+                    <tr id='delivery_region_box' class='not-visible'>
+                        <th>{{ form_create.delivery_region.label_tag }}</th>
+                        <td>{{ form_create.delivery_region }}<td>
+                    </tr>
+                    <tr id='delivery_city_box' class='not-visible'>
+                        <th>{{ form_create.delivery_city.label_tag }}</th>
+                        <td>{{ form_create.delivery_city }}<td>
+                    </tr>
+                    <tr id='post_office_number_box' class='not-visible'>
+                        <th>{{ form_create.post_office_number.label_tag }}</th>
+                        <td>{{ form_create.post_office_number }}<td>
+                    </tr>
+                    <tr id='payment_method_box' class='not-visible'>
+                        <th>{{ form_create.payment_method.label_tag }}</th>
+                        <td>{{ form_create.payment_method }}<td>
+                    </tr>
+
+                </tbody>
+                
+            {% comment %} {{ form_create.as_table }} {% endcomment %}
+            </table>
+            <p><input type="submit" value="Place order" id='submit' class="mt-5 not-visible">
+                <input type="submit" value="LiqPay" id='liqpay' class="mt-5 not-visible"></p>
+            
+        </form>
+        {% include "../scripts/phones.html" %}
+        {% include '../scripts/logic.html' %}
+          
+        
+    </div>
 {% endblock %}

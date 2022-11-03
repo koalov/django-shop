@@ -25,32 +25,30 @@
                 <tr>
                     <td>
                         <a href="{{ product.get_absolute_url }}">
-                            <img src="
-                                {% if product.image %}
-                                    {{ product.image_in_main.url }}
-                                {% else %}
-                                    {% static 'ecomm/images/no_image.jpg' %}
-                                {% endif %}">
+                            <img src="{{ product.image_in_main.url }}"
+                            alt='{% static 'ecomm/images/no_image.jpg' %}'>
                         </a>
                     </td>
                     <td>{{ product.name }}</td>
                     <td>{{ item.quantity }}</td>
                     <td><a href="{% url 'cart:cart_remove' product.id%}">Remove</a></td>
-                    <td class="num">${{ item.price }}</td>
-                    <td class="num">${{ item.total_price }}</td>
+                    <td class="num">₴{{ item.price }}</td>
+                    <td class="num">₴{{ item.total_price }}</td>
                 </tr>
             {% endwith %}
         {% endfor %}
         <tr class="total">
             <td>Total</td>
             <td colspan="4"></td>
-            <td class="num">${{ cart.get_total_price }}</td>
+            <td class="num">₴{{ cart.get_total_price }}</td>
         </tr>
         </tbody>
     </table>
     <p class="text-right">
         <a href="{% url 'ecomm:home' %}" class="button light">Continue shopping</a>
+        {% if cart|length > 0 %}
         <a href="{% url "order_create" %}" class="button">Checkout</a>
+        {% endif %}
     </p>
     </div>
 {% endblock %}

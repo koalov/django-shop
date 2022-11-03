@@ -16,7 +16,6 @@ class CartLogic:
             # save an empty cart in the session
             cart = self.session[settings.CART_SESSION_ID] = {}
         self.cart = cart
-        self.uuid = 123456
 
     def add(self, product, quantity=1, update_quantity=False):
         """
@@ -36,7 +35,6 @@ class CartLogic:
     def save(self):
         # Обновление сессии cart
         self.session[settings.CART_SESSION_ID] = self.cart
-        self.session['uuid'] = self.uuid
         # Отметить сеанс как "измененный", чтобы убедиться, что он сохранен
         self.session.modified = True
 

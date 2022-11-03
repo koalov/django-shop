@@ -12,8 +12,11 @@
     <a class="navbar-brand" href="{% url 'ecomm:home' %}">
       <img src="{% static 'ecomm/images/logo.jpg' %}" width="40" height="40" alt="" class="d-inline-block align-text-top">
     </a>
-    <div class="collapse navbar-collapse" id="navbarCollapseLinks">
-      <ul class="navbar-nav">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item active">
               <a href="{% url 'ecomm:home' %}" class="nav-link">Home</a>
           </li>
@@ -21,7 +24,7 @@
               <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                 Catalog
               </button>
-              <ul class="dropdown-menu dropdown-menu-dark" data-bs-toggle="dropdown">
+              <ul class="dropdown-menu dropdown-menu-dark">
                   {% for c in category_tree %}
                     {% if c.is_root_node %}
                     <li><a class="dropdown-item" href="{{ c.get_absolute_url}}">{{ c.name }}</a></li>
@@ -41,11 +44,11 @@
           <li class="nav-image" data-bs-toggle="tooltip" data-bs-placement="bottom"
               title="{% with total_items=cart|length %}
                         {% if cart|length > 0 %}
-                            Your cart:
-                            {{ total_items }} item{{ total_items|pluralize }},
-                                ${{ cart.get_total_price }}
+{%  trans "Your cart" %}:
+{{ total_items }} {% trans "item" %}{{ total_items|pluralize }},
+₴{{ cart.get_total_price }}
                         {% else %}
-                            Your cart is empty.
+{% trans "Your cart is empty" %}.
                         {% endif %}
                      {% endwith %}">
               <a class="nav-link" href="{{ cart_url }}">

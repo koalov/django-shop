@@ -1,0 +1,4 @@
+<option value selected>---------</option>
+{% for country in countries %}
+    <option value="{{ country.pk }}">{{ country.country }}</option>
+{% endfor %}

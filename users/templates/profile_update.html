@@ -19,9 +19,11 @@
             {% if field.help_text %}
                  <p class="help">{{ field.help_text|safe }}</p>
             {% endif %}
+           {% include 'phones.html' %}
            </div>
 
         {% endfor %}
+
       <div class="button-wrapper submit">
          <input type="submit" value="Update" />
       </div>

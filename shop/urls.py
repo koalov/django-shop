@@ -18,20 +18,22 @@ from django.urls import path, include, re_path
 from django.conf import settings
 from django.conf.urls.static import static
 from django.views.generic import TemplateView
+from ajax_select import urls as ajax_select_urls
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    re_path(r'^cart/', include('cart.urls')),
-    re_path(r'^orders/', include('orders.urls')),
-    path('', include('ecomm.urls', namespace='ecomm')),
-    path('accounts/', include('allauth.urls')),
-    path('account/', include('users.urls')),
-    path('__debug__/', include('debug_toolbar.urls')),
-    path('', include('send_mail.urls')),
-    path('search/', include('search.urls')),
-    path('filter/', include('filter.urls'))
-    ]
+    path("admin/", admin.site.urls),
+    re_path(r"^cart/", include("cart.urls")),
+    re_path(r"^orders/", include("orders.urls")),
+    re_path(r"^ajax_select/", include(ajax_select_urls)),
+    path("", include("ecomm.urls", namespace="ecomm")),
+    path("accounts/", include("allauth.urls")),
+    path("account/", include("users.urls")),
+    path("__debug__/", include("debug_toolbar.urls")),
+    path("", include("send_mail.urls")),
+    path("search/", include("search.urls")),
+    path("filter/", include("filter.urls")),
+]
 
 
 if settings.DEBUG:
