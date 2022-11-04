@@ -2,6 +2,7 @@ from django.contrib import messages
 from django.core.mail import EmailMultiAlternatives
 from django.http import HttpResponseRedirect
 from django.template import loader
+from django.utils.translation import gettext_lazy as _
 
 
 def mail_send(request):
@@ -19,14 +20,14 @@ def mail_send(request):
     message = template.render(context)
 
     email = EmailMultiAlternatives(
-        "Client's message", message,
-        "Hello" + "- Lucky Man !",
+        _("Client's message"), message,
+        _("Hello") + _("- Lucky Man !"),
         ["blinov.maxim@gmail.com"]
 
     )
 
     email.content_subtype = 'html'
     email.send()
-    messages.success(request, 'Message sent seccessfully !')
+    messages.success(request, _('Message sent successfully !'))
 
     return HttpResponseRedirect('feedback/')

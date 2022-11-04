@@ -14,25 +14,6 @@ def homepage(request):
     return render(request, "ecomm/main.html", context=context)
 
 
-# class ParentCategoryDetailView(DetailView):
-#     model = Category
-#     template_name = 'ecomm/parent.html'
-#     context_object_name = 'parent_category'
-#
-#
-# class ChildrenCategoryDetailView(DetailView):
-#     model = Category
-#     template_name = 'ecomm/children.html'
-#     context_object_name = 'children_category'
-#     paginate_by = 5
-#     slug_field = 'slug'
-#
-#     def get_context_data(self, *, object_list=None, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         context['products'] = self.object.product_set.all()
-#         return context
-
-
 def category_page(request, slug):
     category = Category.objects.get(slug=slug)
 

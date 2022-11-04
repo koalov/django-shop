@@ -4,8 +4,8 @@
 {% block content %}
 <h1 style="margin-left: 23px">{% trans "Register" %}</h1>
 
-<p style="margin-left: 24px">{% blocktrans %}Already have an account? Then please <a
-        href="{{ login_url }}">login</a>.{% endblocktrans %}</p>
+<p style="margin-left: 24px">{% blocktrans %}Already have an account? Then please {% endblocktrans %}
+    <a href="{{ login_url }}">{% trans "login" %}</a>.</p>
 {% if form.errors %}
         {% for field in form %}
             {% for error in field.errors %}

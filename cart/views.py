@@ -1,14 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_POST
+
+
 from ecomm.models import Product
 from .cart import CartLogic
 from .form import CartAddProductForm
-# from .models import Cart
-
-
-# def cart_create(user=None):
-#     cart_obj = Cart.objects.create(user=None)
-#     return cart_obj
 
 
 @require_POST

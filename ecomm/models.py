@@ -1,6 +1,8 @@
 from django.db import models
 from django.db.models import Q
 from django.urls import reverse
+from django.utils.translation import gettext_lazy as _
+
 from mptt.models import MPTTModel, TreeForeignKey
 from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFill
@@ -45,23 +47,24 @@ class ProductManager(models.Manager):
 
 
 class Category(MPTTModel):
-    name = models.CharField(max_length=100, db_index=True, verbose_name='Category name')
+    name = models.CharField(max_length=100, db_index=True, verbose_name=_('Category '
+                                                                          'name'))
     slug = models.SlugField(max_length=100, db_index=True, unique=True, verbose_name='URL')
     description = models.TextField(max_length=1000, blank=True,
-                                   verbose_name='Description')
-    available = models.BooleanField(default=True, verbose_name='Published')
+                                   verbose_name=_('Description'))
+    available = models.BooleanField(default=True, verbose_name=_('Published'))
     parent = TreeForeignKey("self", on_delete=models.CASCADE, related_name='children', null=True, blank=True,
-                            verbose_name='Parent category')
+                            verbose_name=_('Parent category'))
     image = models.ImageField(upload_to="category/%Y", null=True, blank=True,
-                              verbose_name="Photo")
+                              verbose_name=_("Photo"))
 
     class MPTTMeta:
         order_insertion_by = ['name']
         # level_attr = 'mptt_level'
 
     class Meta:
-        verbose_name = 'Category'
-        verbose_name_plural = 'Categories'
+        verbose_name = _('Category')
+        verbose_name_plural = _('Categories')
 
     def __str__(self):
         return f'{self.name} | - {self.parent}' if self.parent else self.name
@@ -71,12 +74,13 @@ class Category(MPTTModel):
 
 
 class ProductType(models.Model):
-    name = models.CharField(max_length=150, db_index=True, verbose_name='Product Name')
-    available = models.BooleanField(default=True, verbose_name='Published')
+    name = models.CharField(max_length=150, db_index=True, verbose_name=_('Product '
+                                                                          'Name'))
+    available = models.BooleanField(default=True, verbose_name=_('Published'))
 
     class Meta:
-        verbose_name = 'Product Type'
-        verbose_name_plural = 'Product Types'
+        verbose_name = _('Product Type')
+        verbose_name_plural = _('Product Types')
 
     def __str__(self):
         return self.name
@@ -84,36 +88,40 @@ class ProductType(models.Model):
 
 class ProductSpecification(models.Model):
     product_type = models.ForeignKey(ProductType, on_delete=models.RESTRICT)
-    name = models.CharField(max_length=150, db_index=True, verbose_name='Name')
+    name = models.CharField(max_length=150, db_index=True, verbose_name=_('Name'))
 
     class Meta:
-        verbose_name = 'Product Specification'
-        verbose_name_plural = 'Product Specifications'
+        verbose_name = _('Product Specification')
+        verbose_name_plural = _('Product Specifications')
 
     def __str__(self):
         return self.name
 
 
 class Product(models.Model):
-    product_type = models.ForeignKey(ProductType, on_delete=models.RESTRICT)
-    category = models.ForeignKey(Category, on_delete=models.RESTRICT)
-    name = models.CharField(max_length=150, db_index=True, verbose_name='Name')
+    product_type = models.ForeignKey(ProductType, on_delete=models.RESTRICT,
+                                     verbose_name=_("Product type"))
+    category = models.ForeignKey(Category, on_delete=models.RESTRICT,
+                                 verbose_name=_("Category"))
+    name = models.CharField(max_length=150, db_index=True, verbose_name=_('Name'))
     slug = models.SlugField(max_length=150, db_index=True, unique=True, verbose_name='URL')
-    image = models.ImageField(upload_to="product/%Y", blank=True, verbose_name="Photo")
+    image = models.ImageField(upload_to="product/%Y", blank=True,
+                              verbose_name=_("Photo"))
     description = models.TextField(max_length=1000, blank=True,
-                                   verbose_name='Description')
-    price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Price')
-    quantity = models.IntegerField(verbose_name='Quantity', default=20)
-    available = models.BooleanField(default=True, verbose_name='Published')
-    featured = models.BooleanField(default=False, verbose_name='Featured')
-    created = models.DateTimeField(auto_now_add=True, verbose_name='Time created at')
-    uploaded = models.DateTimeField(auto_now=True, verbose_name='Time updated at')
+                                   verbose_name=_('Description'))
+    price = models.DecimalField(max_digits=10, decimal_places=2,
+                                verbose_name=_('Price'))
+    quantity = models.IntegerField(verbose_name=_('Quantity'), default=20)
+    available = models.BooleanField(default=True, verbose_name=_('Published'))
+    featured = models.BooleanField(default=False, verbose_name=_('Featured'))
+    created = models.DateTimeField(auto_now_add=True, verbose_name=_('Time created at'))
+    uploaded = models.DateTimeField(auto_now=True, verbose_name=_('Time updated at'))
     objects = ProductManager()
 
     class Meta:
         ordering = ('id',)
-        verbose_name = 'Product'
-        verbose_name_plural = 'Products'
+        verbose_name = _('Product')
+        verbose_name_plural = _('Products')
         index_together = (('id', 'slug'),)
 
     def __str__(self):
@@ -159,13 +167,15 @@ class Product(models.Model):
 
 
 class ProductSpecificationValue(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    specification = models.ForeignKey(ProductSpecification, on_delete=models.RESTRICT)
-    value = models.CharField(max_length=255, verbose_name='Value')
+    product = models.ForeignKey(Product, on_delete=models.CASCADE,
+                                verbose_name=_("Product"))
+    specification = models.ForeignKey(ProductSpecification, on_delete=models.RESTRICT,
+                                      verbose_name=_("Specification"))
+    value = models.CharField(max_length=255, verbose_name=_('Value'))
 
     class Meta:
-        verbose_name = 'Product Specification Value'
-        verbose_name_plural = 'Product Specifications Values'
+        verbose_name = _('Product Specification Value')
+        verbose_name_plural = _('Product Specifications Values')
 
     def __str__(self):
         return self.value

@@ -2,6 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
+from django.utils.translation import gettext_lazy as _
 
 from orders.models import Order
 from users.forms import ProfileForm
@@ -17,7 +18,7 @@ def profile(request):
         current_user = UserProfile.objects.get(user__pk=user.pk)
         order_list = Order.objects.filter(phone_number=current_user.telephone)
     return render(request, 'profile.html', {'user': user,
-                                            'title': 'My Profile',
+                                            'title': _('My Profile'),
                                             'order_list': order_list,
                                             })
 

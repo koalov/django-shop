@@ -1,4 +1,5 @@
 from django import forms
+from django.utils.translation import gettext_lazy as _
 
 from .models import (
     Order,
@@ -14,14 +15,14 @@ class OrderCreateForm(forms.ModelForm):
 
     first_name = forms.CharField(
         required=True,
-        label="First name",
+        label=_("First name"),
         widget=forms.TextInput(attrs={"class": "form-input", "style": "!important"}),
     )
     last_name = forms.CharField(
-        label="Last name", widget=forms.TextInput(attrs={"class": "form-input"})
+        label=_("Last name"), widget=forms.TextInput(attrs={"class": "form-input"})
     )
     phone_number = forms.CharField(
-        label="Phone number",
+        label=_("Phone number"),
         widget=forms.NumberInput(
             attrs={"type": "tel", "data-tel-input": "", "max-length": 18}
         ),
@@ -29,19 +30,19 @@ class OrderCreateForm(forms.ModelForm):
     )
     post_office_number = forms.CharField(
         required=False,
-        label="Post Office Number",
+        label=_("Post Office Number"),
     )
     delivery_method = forms.ModelChoiceField(
-        queryset=DeliveryMethod.objects, label="Delivery method"
+        queryset=DeliveryMethod.objects, label=_("Delivery method")
     )
     delivery_country = forms.ModelChoiceField(
-        queryset=Country.objects, label="Delivery country", required=False
+        queryset=Country.objects, label=_("Delivery country"), required=False
     )
     delivery_region = forms.ModelChoiceField(
-        queryset=Region.objects, label="Delivery region", required=False
+        queryset=Region.objects, label=_("Delivery region"), required=False
     )
     delivery_city = forms.ModelChoiceField(
-        queryset=City.objects, label="Delivery city", required=False
+        queryset=City.objects, label=_("Delivery city"), required=False
     )
 
     class Meta:

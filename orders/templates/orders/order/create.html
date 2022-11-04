@@ -20,7 +20,7 @@
                     </li>
                 {% endfor %}
             </ul>
-            <p>Total: ₴{{ cart.get_total_price }}</p>
+            <p>{% trans "Total" %}: ₴{{ cart.get_total_price }}</p>
         </div>
         {% include '../scripts/styles.html' %}
         
@@ -82,7 +82,8 @@
                 
             {% comment %} {{ form_create.as_table }} {% endcomment %}
             </table>
-            <p><input type="submit" value="Place order" id='submit' class="mt-5 not-visible">
+            <p><input type="submit" value="{% trans "Place order" %}" id='submit'
+                      class="mt-5 not-visible">
                 <input type="submit" value="LiqPay" id='liqpay' class="mt-5 not-visible"></p>
             
         </form>

@@ -45,8 +45,8 @@
               title="{% with total_items=cart|length %}
                         {% if cart|length > 0 %}
 {%  trans "Your cart" %}:
-{{ total_items }} {% trans "item" %}{{ total_items|pluralize }},
-₴{{ cart.get_total_price }}
+{% trans "units" %}: {{ total_items }}
+{% trans "total price" %}: ₴{{ cart.get_total_price }}
                         {% else %}
 {% trans "Your cart is empty" %}.
                         {% endif %}

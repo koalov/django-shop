@@ -59,12 +59,12 @@ INSTALLED_APPS = [
     "filter",
     "imagekit",
     "orders",
-    # "ajax_select",
 ]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.locale.LocaleMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -153,6 +153,11 @@ USE_TZ = True
 
 LOCALE_PATHS = [
     BASE_DIR / "locales",
+]
+
+LANGUAGES = [
+    ("en", "English"),
+    ("uk", "Українська"),
 ]
 
 # Static files (CSS, JavaScript, Images)
