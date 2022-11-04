@@ -45,21 +45,23 @@ class ProductManager(models.Manager):
 
 
 class Category(MPTTModel):
-    name = models.CharField(max_length=100, db_index=True, verbose_name='Наименование Категории')
+    name = models.CharField(max_length=100, db_index=True, verbose_name='Category name')
     slug = models.SlugField(max_length=100, db_index=True, unique=True, verbose_name='URL')
-    description = models.TextField(max_length=1000, blank=True, verbose_name='Описание')
-    available = models.BooleanField(default=True, verbose_name='Опубликован')
+    description = models.TextField(max_length=1000, blank=True,
+                                   verbose_name='Description')
+    available = models.BooleanField(default=True, verbose_name='Published')
     parent = TreeForeignKey("self", on_delete=models.CASCADE, related_name='children', null=True, blank=True,
-                            verbose_name='Родительская Категория')
-    image = models.ImageField(upload_to="category/%Y", null=True, blank=True, verbose_name="Фото")
+                            verbose_name='Parent category')
+    image = models.ImageField(upload_to="category/%Y", null=True, blank=True,
+                              verbose_name="Photo")
 
     class MPTTMeta:
         order_insertion_by = ['name']
         # level_attr = 'mptt_level'
 
     class Meta:
-        verbose_name = 'Категории'
-        verbose_name_plural = 'Категории'
+        verbose_name = 'Category'
+        verbose_name_plural = 'Categories'
 
     def __str__(self):
         return f'{self.name} | - {self.parent}' if self.parent else self.name
@@ -70,7 +72,7 @@ class Category(MPTTModel):
 
 class ProductType(models.Model):
     name = models.CharField(max_length=150, db_index=True, verbose_name='Product Name')
-    available = models.BooleanField(default=True, verbose_name='Опубликован')
+    available = models.BooleanField(default=True, verbose_name='Published')
 
     class Meta:
         verbose_name = 'Product Type'
@@ -95,22 +97,23 @@ class ProductSpecification(models.Model):
 class Product(models.Model):
     product_type = models.ForeignKey(ProductType, on_delete=models.RESTRICT)
     category = models.ForeignKey(Category, on_delete=models.RESTRICT)
-    name = models.CharField(max_length=150, db_index=True, verbose_name='Наименование')
+    name = models.CharField(max_length=150, db_index=True, verbose_name='Name')
     slug = models.SlugField(max_length=150, db_index=True, unique=True, verbose_name='URL')
-    image = models.ImageField(upload_to="product/%Y", blank=True, verbose_name="Фото")
-    description = models.TextField(max_length=1000, blank=True, verbose_name='Описание')
-    price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Цена')
-    quantity = models.IntegerField(verbose_name='Количество', default=20)
-    available = models.BooleanField(default=True, verbose_name='Опубликован')
-    featured = models.BooleanField(default=False, verbose_name='Избранное')
-    created = models.DateTimeField(auto_now_add=True, verbose_name='Время создания')
-    uploaded = models.DateTimeField(auto_now=True, verbose_name='Время обновления')
+    image = models.ImageField(upload_to="product/%Y", blank=True, verbose_name="Photo")
+    description = models.TextField(max_length=1000, blank=True,
+                                   verbose_name='Description')
+    price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Price')
+    quantity = models.IntegerField(verbose_name='Quantity', default=20)
+    available = models.BooleanField(default=True, verbose_name='Published')
+    featured = models.BooleanField(default=False, verbose_name='Featured')
+    created = models.DateTimeField(auto_now_add=True, verbose_name='Time created at')
+    uploaded = models.DateTimeField(auto_now=True, verbose_name='Time updated at')
     objects = ProductManager()
 
     class Meta:
         ordering = ('id',)
-        verbose_name = 'Товар'
-        verbose_name_plural = 'Товары'
+        verbose_name = 'Product'
+        verbose_name_plural = 'Products'
         index_together = (('id', 'slug'),)
 
     def __str__(self):
@@ -124,9 +127,9 @@ class Product(models.Model):
             from django.utils.safestring import mark_safe
             return mark_safe(u'<a href="{0}" target="_blank"><img src="{0}" width="100"/></a>'.format(self.image.url))
         else:
-            return '(Нет изображения)'
+            return '(No image)'
 
-    image_img.short_description = 'Картинка'
+    image_img.short_description = 'Image'
     image_img.allow_tags = True
 
     image_in_product = ImageSpecField(source='image',

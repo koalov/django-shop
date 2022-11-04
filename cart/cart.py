@@ -8,7 +8,7 @@ class CartLogic:
 
     def __init__(self, request, *args, **kwargs):
         """
-        Инициализируем корзину
+        Cart initialization
         """
         self.session = request.session
         cart = self.session.get(settings.CART_SESSION_ID)
@@ -19,7 +19,7 @@ class CartLogic:
 
     def add(self, product, quantity=1, update_quantity=False):
         """
-        Добавить продукт в корзину или обновить его количество.
+        Add product to the cart or updating its quantity.
         """
         product_id = str(product.id)
         if product_id not in self.cart:
@@ -33,14 +33,14 @@ class CartLogic:
         self.session['counter_items'] = self.counter()
 
     def save(self):
-        # Обновление сессии cart
+        # Updating cart session
         self.session[settings.CART_SESSION_ID] = self.cart
-        # Отметить сеанс как "измененный", чтобы убедиться, что он сохранен
+        # Marked session as "changed" for ensure that product is saved
         self.session.modified = True
 
     def remove(self, product):
         """
-        Удаление товара из корзины.
+        Deleting product from the cart.
         """
         product_id = str(product.id)
         if product_id in self.cart:
@@ -50,10 +50,10 @@ class CartLogic:
 
     def __iter__(self):
         """
-        Перебор элементов в корзине и получение продуктов из базы данных.
+        Selection products in the cart and receiving them from database.
         """
         product_ids = self.cart.keys()
-        # получение объектов product и добавление их в корзину
+        # receiving product objects and adding them to the cart
         products = Product.objects.filter(id__in=product_ids)
         for product in products:
             self.cart[str(product.id)]['product'] = product
@@ -65,13 +65,13 @@ class CartLogic:
 
     def __len__(self):
         """
-        Подсчет всех товаров в корзине.
+        Counting total products in the cart.
         """
         return sum([item['quantity'] for item in self.cart.values()])
 
     def get_total_price(self):
         """
-        Подсчет стоимости товаров в корзине.
+        Counting of total price in the cart.
         """
         return sum(Decimal(item['price']) * item['quantity'] for item in
                    self.cart.values())

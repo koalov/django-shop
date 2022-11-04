@@ -1,7 +1,8 @@
 {% extends 'ecomm/base.html' %}
+{% load i18n %}
 
 {% block title %}
-    <title>Купить {{ category.name }} в Украине</title>
+    <title>{% blocktrans %}Buy {{ category.name }} in Ukraine{% endblocktrans %}</title>
 {% endblock title %}
 
 
@@ -15,7 +16,9 @@
         {% if products %}
         <div class="col justify-content-end mb-3">
             <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">Товаров на странице</button>
+                <button class="btn btn-secondary dropdown-toggle" type="button"
+                        id="dropdownMenuButton1" data-bs-toggle="dropdown"
+                        aria-expanded="false">{% trans "Items per page" %}</button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                     <li><a class="dropdown-item" href="/category/{{ category.slug }}/?sort=2">2</a></li>
                     <li><a class="dropdown-item" href="/category/{{ category.slug }}/?sort=5">5</a></li>
@@ -43,10 +46,11 @@
             <div class="card-body">
                 <h5 class="card-title"><a href="{{ product.get_absolute_url }}">{{ product.name }}</a></h5>
                 <p class="card-text">{{ product.description|truncatechars:100}}</p>
-                <p class="card-text">Цена: {{ product.price }}</p>
+                <p class="card-text">{% trans "Price" %}: {{ product.price }}</p>
             </div>
             <div class="card-footer">
-                <a href="{{ product.get_absolute_url }}" class="btn btn-primary">Подробнее</a>
+                <a href="{{ product.get_absolute_url }}" class="btn btn-primary">
+                    {% trans "Detail" %}</a>
             </div>
         </div>
         </div>

@@ -9,7 +9,7 @@ from shop.settings import GOOGLE_MAPS_API_KEY
 
 def homepage(request):
     products = Product.objects.filter(available=True)
-    context = {"products": products, "title": "Главная страница"}
+    context = {"products": products, "title": "Main page"}
 
     return render(request, "ecomm/main.html", context=context)
 
@@ -72,13 +72,13 @@ def feedback(request):
     return render(
         request,
         "ecomm/feedback.html",
-        {"title": "Обратная связь", "myapi": GOOGLE_MAPS_API_KEY},
+        {"title": "Feedback", "myapi": GOOGLE_MAPS_API_KEY},
     )
 
 
 def something(request):
-    return render(request, "ecomm/something.html", {"title": "Что то полезное"})
+    return render(request, "ecomm/something.html", {"title": "Something useful"})
 
 
 def about(request):
-    return render(request, "ecomm/about.html", {"title": "О сайте"})
+    return render(request, "ecomm/about.html", {"title": "About"})

@@ -1,0 +1,27 @@
+ <table class="table table-bordered" id="orders_table" style="text-align: center" >
+               <thead class="table-success">
+                    <tr>
+                        <th>ID</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Phone</th>
+                        <th>City</th>
+                        <th>Post office</th>
+                        <th>Status</th>
+
+                    </tr>
+               </thead>
+                {% for ord in orders_list %}
+                    <tr>
+                        <td>{{ ord.id }}</td>
+                        <td>{{ ord.first_name }}</td>
+                        <td>{{ ord.last_name }}</td>
+                        <td>{{ ord.phone_number }}</td>
+                        <td>{{ ord.delivery_city }}</td>
+                        <td>{{ ord.post_office_number }}</td>
+                        <td>{{ ord.paid }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+
+

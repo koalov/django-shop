@@ -25,7 +25,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     re_path(r"^cart/", include("cart.urls")),
     re_path(r"^orders/", include("orders.urls")),
-    re_path(r"^ajax_select/", include(ajax_select_urls)),
+    # re_path(r"^ajax_select/", include(ajax_select_urls)),
     path("", include("ecomm.urls", namespace="ecomm")),
     path("accounts/", include("allauth.urls")),
     path("account/", include("users.urls")),

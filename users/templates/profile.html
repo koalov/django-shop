@@ -1,36 +1,94 @@
 {% extends 'ecomm/base.html' %}
 {% load i18n %}
-{% load account %}
-{% block content %}
+{load account %}
 {% load static %}
-{% if user.is_authenticated %}
-<a href="{% url 'users:profile_update' %}">Update Profile</a> | <a href="{% url 'account_email' %}">Manage Email</a>  | <a href="{% url 'account_change_password' %}">Change Password</a> |
-<a href="{% url 'account_logout' %}">Logout</a>
-{% endif %}
-<p>Welcome, {{ user.username }}.</p>
+{% block title %}
+    <title>{{ title }}</title>
 
+{% endblock title %}
+{% block content %}
 
-<h2>My Profile</h2>
-{% if not user.profile.account_verified %}
-    (Unverified email.)
+<div class="container-lg">
+    {% if user.is_authenticated %}
+    <a href="{% url 'users:profile_update' %}" class="btn btn-primary"  role="button"
+    >{% trans "Update Profile" %}</a>
+        | <a href="{% url 'account_email' %}" class="btn btn-primary"  role="button"
+    >{% trans "Manage Email" %}</a>
+        | <a href="{% url 'account_change_password' %}" class="btn btn-primary"
+             role="button" >{% trans "Change Password" %}</a>
+        | <a href="{% url 'account_logout' %}" class="btn btn-primary"  role="button"
+    >{% trans "Logout" %}</a>
+{#        {% if user.is_authenticated %}#}
+{#        | <a href="{% url 'users:order_detail' %}"class="btn btn-primary"  role="button" >Orders</a>#}
+{#        {% endif %}#}
     {% endif %}
-<form method="POST" enctype="multipart/form-data">
-<ul>
-    <li>First Name: {{ user.first_name }} </li>
-    <li>Last Name: {{ user.last_name }} </li>
-    <li>Organization: {{ user.profile.org }} </li>
-    <li>Telephone: {{ user.profile.telephone }} </li>
-    <li>Sex: {{ user.profile.sex }} </li>
-    <li>birthday: {{ user.profile.birthday }} </li>
-</ul>
-    <div class="column is-4">
-        {% if user.profile.photo %}
-            <div class="box">
-                <figure class="image">
-                    <img src="{{ user.profile.photo.url }}" />
-                </figure>
+    <h3>{% trans "Welcome" %}, {{ user.username }}.</h3>
+        <div class="row">
+            <div class="col">
+                {% if user.profile.photo %}
+                <a href="{{ user.profile.photo.url }}" data-fslightbox="images">
+                <img
+                  class="img-fluid"
+                  src="{{user.profile.image_in_profile.url}} "
+                  alt="{% trans "User photo" %}"
+                />
+                </a>
+                {% else %}
+                   <a href='#' data-fslightbox="images">
+                   <img class="img-fluid"
+                        src={% static 'ecomm/images/no_foto.png' %}
+                                alt="{% trans "No photo available" %}"/></a>
+                {% endif %}
             </div>
-        {% endif %}
-    </div>
+            <div class="col">
+                <div class="info">
+                    <div class="mb-4">
+                      <h1 class="title">{% trans "My Profile" %}</h1>
+                    </div>
+                    <div class="mt-2">
+                      <h5 class="text">{% trans "First Name" %}: {{ user.first_name }}</h5>
+                       <h5 class="text">{% trans "Last Name" %}: {{ user.last_name }}</h5>
+                    </div>
+                    <div class="text mt-4">
+                      <h2 class="text">{% trans "Information" %}</h2>
+                      <li>{% trans "Telephone" %}: {{ user.profile.telephone }} </li>
+                      <li>{% trans "Gender" %}: {{ user.profile.sex }} </li>
+                      <li>{% trans "Birthday" %}: {{ user.profile.birthday }} </li>
 
-{% endblock %}
+                    </div>
+                </div>
+            </div>
+
+        <div class="mt-5">
+            <br/>
+            <h3>{% trans 'Your orders' %}</h3>
+        </div>
+<table class="table table-bordered" id="orders_table" style="text-align: center" >
+        <thead class="table-success">
+            <tr>
+                <th>{% trans "ID" %}</th>
+                <th>{% trans "First Name" %}</th>
+                <th>{% trans "Last Name" %}</th>
+                <th>{% trans "Phone" %}</th>
+                <th>{% trans "City" %}</th>
+                <th>{% trans "Post office" %}</th>
+                <th>{% trans "Status" %}</th>
+            </tr>
+        </thead>
+        {% for order in order_list %}
+            <tr>
+                <td>{{ order.id }}</td>
+                <td>{{ order.first_name }}</td>
+                <td>{{ order.last_name }}</td>
+                <td>{{ order.phone_number }}</td>
+                <td>{{ order.delivery_city }}</td>
+                <td>{{ order.post_office_number }}</td>
+                <td>{{ order.paid }}</td>
+            </tr>
+        {% endfor %}
+</table>
+
+
+        </div>
+</div>
+{% endblock content %}

@@ -1,2 +1,2 @@
-def unique_slug_generator(request):
+def unique_slug_generator(*args, **kwargs):
     pass

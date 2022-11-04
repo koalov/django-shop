@@ -1,6 +1,8 @@
 from allauth.account.models import EmailAddress
 from django.db import models
 from django.contrib.auth.models import User
+from imagekit.models import ImageSpecField
+from imagekit.processors import ResizeToFill
 
 
 # Create your models here.
@@ -33,3 +35,20 @@ class UserProfile(models.Model):
             if len(result):
                 return result[0].verified
         return False
+
+    def photo_img(self):
+        if self.photo:
+            from django.utils.safestring import mark_safe
+            return mark_safe(
+                u'<a href="{0}" target="_blank"><img src="{0}" width="100"/></a>'.format(
+                    self.photo.url))
+        else:
+            return '(Нет изображения)'
+
+    photo_img.short_description = 'Картинка'
+    photo_img.allow_tags = True
+
+    image_in_profile = ImageSpecField(source='photo',
+                                      processors=[ResizeToFill(400, 400)],
+                                      format='JPEG',
+                                      options={'quality': 60})

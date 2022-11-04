@@ -1,8 +1,9 @@
 {% extends 'ecomm/base.html' %}
 {% load static %}
+{% load i18n %}
 
 {% block title %}
-    <title>Купить {{ category.name }} в Украине</title>
+    <title>{% blocktrans %}Купить {{ category.name }} в Украине{% endblocktrans %}</title>
 {% endblock title %}
 
 

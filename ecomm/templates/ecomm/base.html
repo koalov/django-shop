@@ -24,6 +24,26 @@
 {% include "ecomm/footer.html" %}
 {% include 'bootstrap/js/js.html' %}
 
+<!--Jquery  -->
+<script  src="https://code.jquery.com/jquery-3.6.1.min.js"
+         integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
+         crossorigin="anonymous"></script>
+<!-- DataTables JS -->
+<script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
+<!-- DataTables script -->
+<script>
+    $("#orders_table").DataTable({
+        paging: true,
+        pageLength: 10,
+        lengthChange: true,
+        autoWidth: true,
+        searching: true,
+        bInfo: true,
+        bSort: true,
+    })
+</script>
+
 </body>
 </html>
 

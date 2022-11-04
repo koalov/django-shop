@@ -119,12 +119,12 @@ class OrderCreateForm(forms.ModelForm):
         phone_number = self.cleaned_data["phone_number"]
         delivery_method = self.cleaned_data["delivery_method"]
         delivery_country = Country.objects.get(
-            pk=self.cleaned_data.get("delivery_country", 1)
+            pk=self.data.get("delivery_country", 1)
         )
         delivery_region = Region.objects.get(
-            pk=self.cleaned_data.get("delivery_region", 26)
+            pk=self.data.get("delivery_region", 26)
         )
-        delivery_city = City.objects.get(pk=self.cleaned_data.get("delivery_city", 17))
+        delivery_city = City.objects.get(pk=self.data.get("delivery_city", 17))
         post_office_number = self.cleaned_data.get(
             "post_office_number", "Самовивіз із магазину"
         )

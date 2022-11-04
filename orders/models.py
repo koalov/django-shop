@@ -87,8 +87,8 @@ class Order(models.Model):
 
     class Meta:
         ordering = ("-created_at",)
-        verbose_name = "Заказ"
-        verbose_name_plural = "Заказы"
+        verbose_name = "Order"
+        verbose_name_plural = "Orders"
 
     def __str__(self):
         return f"Order {self.pk}"

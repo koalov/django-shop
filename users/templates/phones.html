@@ -1,6 +1,6 @@
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        var phoneInputs = document.getElementById('id-telephone');
+        var phoneInputs = document.querySelectorAll('input[data-tel-input]');
     
         var getInputNumbersValue = function (input) {
             // Return stripped input value — just numbers
@@ -57,10 +57,7 @@
                 if (inputNumbersValue.length >= 10) {
                     formattedInputValue += '-' + inputNumbersValue.substring(9, 11);
                 }
-                if (inputNumbersValue.length >= 11) {
-                    const verify = document.getElementById('verify');
-                    verify.classList.remove('not-visible');
-                }
+
             } else if (["3", "0"].indexOf(inputNumbersValue[0]) > -1) {
                 if (inputNumbersValue[0] == "0") inputNumbersValue = "38" + inputNumbersValue;
                 var firstSymbols = (inputNumbersValue[0] == "0") ? "+380" : "+380";
@@ -77,10 +74,7 @@
                 if (inputNumbersValue.length >= 11) {
                     formattedInputValue += '-' + inputNumbersValue.substring(10, 12);
                 }
-                if (inputNumbersValue.length >= 12) {
-                    const verify = document.getElementById('verify');
-                    verify.classList.remove('not-visible');
-                }
+
                 
             } else if (["4"].indexOf(inputNumbersValue[0]) > -1) {
                 if (inputNumbersValue[0] == "0") inputNumbersValue = "48" + inputNumbersValue;
@@ -98,10 +92,7 @@
                 if (inputNumbersValue.length >= 10) {
                     formattedInputValue += '-' + inputNumbersValue.substring(9, 11);
                 }
-                if (inputNumbersValue.length >= 11) {
-                    const verify = document.getElementById('verify');
-                    verify.classList.remove('not-visible');
-                }
+
             } else {
                 formattedInputValue = '+' + inputNumbersValue.substring(0, 16);
             }

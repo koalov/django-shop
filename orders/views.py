@@ -41,7 +41,7 @@ class OrderCreate(View):
                 )
             cart.clear()
             request.session["counter_items"] = 0
-        return render(request, "orders/order/created.html", {"order": order})
+            return render(request, "orders/order/created.html", {"order": order})
 
 
 def get_country(request):

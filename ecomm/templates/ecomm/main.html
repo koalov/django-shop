@@ -2,13 +2,13 @@
 {% load i18n %}
 
 {% block title %}
-    <title>Главная страница Интернет-Магазина</title>
+    <title>{% trans "Mail page of the e-shop" %}</title>
 {% endblock title %}
 
 
 {% block content %}
 <div class="container-lg">
-<h1>Список товаров</h1>
+<h1>{% trans "Products list" %}</h1>
 <div class="card-group">
     {% for product in products %}
     <div class="row py-2">
@@ -26,7 +26,8 @@
                             {{ product.get_short_name }}
                         </a>
                     </h5>
-                    <p class="card-text"><b>Цена</b>: {{ product.price }}₴</p>
+                    <p class="card-text"><b>{% trans "Price" %}</b>:
+                        {{ product.price }}₴</p>
                 </div>
 
             </div>

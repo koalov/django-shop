@@ -59,7 +59,7 @@ INSTALLED_APPS = [
     "filter",
     "imagekit",
     "orders",
-    "ajax_select",
+    # "ajax_select",
 ]
 
 MIDDLEWARE = [

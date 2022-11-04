@@ -1,9 +1,9 @@
 from .models import *
 
-menu = [{'title': "О сайте", 'url_name': 'about'},
-        {'title': "Обратная связь", 'url_name': 'feedback'},
-        {'title': "Что-то ещё", 'url_name': 'something'},
-        {'title': "Корзина", 'url_name': 'cart'},
+menu = [{'title': "About", 'url_name': 'about'},
+        {'title': "Feedback", 'url_name': 'feedback'},
+        {'title': "Something else", 'url_name': 'something'},
+        {'title': "Cart", 'url_name': 'cart'},
         ]
 
 
