@@ -58,7 +58,7 @@ def feedback(request):
 
 
 def something(request):
-    return render(request, "ecomm/something.html", {"title": "Something useful"})
+    return render(request, "ecomm/policy.html", {"title": "Something useful"})
 
 
 def about(request):
